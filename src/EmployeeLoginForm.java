@@ -12,6 +12,7 @@ public class EmployeeLoginForm extends JDialog
     private JPasswordField PasswordFieldLoginPassword;
     private JButton LoginPageLoginButton;
     private JButton LoginPageCreateAccountButton;
+    private JTextField employeeIDTextField;
 
     public EmployeeLoginForm(JFrame parent)
     {
@@ -28,17 +29,18 @@ public class EmployeeLoginForm extends JDialog
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                    String Employee_id = employeeIDTextField.getText();
                     String EmployeeEmailAddress = TextFieldLoginEmailAddress.getText();
                     String EmployeePassword = String.valueOf(PasswordFieldLoginPassword.getPassword());
 
 
-                    weisEmployee = ValidatedUser(EmployeeEmailAddress, EmployeePassword);
+                    weisEmployee = ValidatedUser(Employee_id, EmployeeEmailAddress, EmployeePassword);
 
 
                     if (weisEmployee != null)
                     {
                         dispose();
-                        LoginSuccessful loginSuccessful = new LoginSuccessful(null);
+                        AccountPage accountPage = new AccountPage(weisEmployee);
                     }
                     else if(EmployeeEmailAddress.isEmpty())
                     {
@@ -69,6 +71,7 @@ public class EmployeeLoginForm extends JDialog
             @Override
             public void actionPerformed(ActionEvent e)
             {
+
                 dispose();
                 CreateAccountForm createAccountForm = new CreateAccountForm(null);
             }
@@ -79,29 +82,30 @@ public class EmployeeLoginForm extends JDialog
 
     public Employee weisEmployee;
 
-    private Employee ValidatedUser(String EmployeeEmailAddress, String EmployeePassword)
+    private Employee ValidatedUser(String Employee_id, String EmployeeEmailAddress, String EmployeePassword)
     {
         Employee weisEmployee = null;
 
         try
         {
             Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+
             Statement statement = connection.createStatement();
 
             //localhost:3306
-            String sql = "SELECT * FROM EMPLOYEE WHERE Email=? AND Password=?";
+
+            String sql = "SELECT * FROM EMPLOYEE WHERE Employee_id = ? AND Email=? AND Password=?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, EmployeeEmailAddress);
-            preparedStatement.setString(2, EmployeePassword);
+            preparedStatement.setString(1, Employee_id);
+            preparedStatement.setString(2, EmployeeEmailAddress);
+            preparedStatement.setString(3, EmployeePassword);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next())
             {
-                weisEmployee = new Employee();
-                weisEmployee.EmployeeEmailAddress = resultSet.getString("Email");
-                weisEmployee.EmployeePassword = resultSet.getString("Password");
+                weisEmployee = Employee.getInstance(Employee_id, EmployeeEmailAddress, EmployeePassword);
             }
 
         }
@@ -118,15 +122,5 @@ public class EmployeeLoginForm extends JDialog
         EmployeeLoginForm employeeLoginForm = new EmployeeLoginForm(null);
 
         Employee weisEmployee = employeeLoginForm.weisEmployee;
-
-        if(weisEmployee != null)
-        {
-            System.out.println("--------------------------------");
-            System.out.println("Employee: " + weisEmployee.EmployeeFName + " " + weisEmployee.EmployeeMName + " " + weisEmployee.EmployeeLName + " " + "has successfully logged in");
-            //System.out.println("Employee ID: " + weisEmployee.EmployeeID);
-            System.out.println("Employee Email: " + weisEmployee.EmployeeEmailAddress);
-            System.out.println("Employee Password: " + weisEmployee.EmployeePassword);
-            System.out.println("--------------------------------");
-        }
     }
 }

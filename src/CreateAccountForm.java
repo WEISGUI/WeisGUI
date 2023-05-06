@@ -2,10 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
+import java.sql.*;
 
 public class CreateAccountForm extends JDialog
 {
@@ -22,6 +19,7 @@ public class CreateAccountForm extends JDialog
     private JButton CreateAccountButton;
     private JButton GoToLoginPageButton;
     private JPanel EmployeeCreateAccountPanel;
+    private JTextField employeeIDTextField;
 
     public CreateAccountForm (JFrame parent)
     {
@@ -39,6 +37,7 @@ public class CreateAccountForm extends JDialog
             public void actionPerformed(ActionEvent e)
             {
                 //Variables
+                String Employee_id = employeeIDTextField.getText();
                 String EmployeeEmailAddress = TextFieldCreateAccountEmailAddress.getText();
                 String EmployeePassword = String.valueOf(PasswordFieldEmployeePassword.getPassword());
                 String EmployeeFName = TextFieldFName.getText();
@@ -48,12 +47,13 @@ public class CreateAccountForm extends JDialog
                 String EmployeePhoneNumber = TextFieldPhoneNumber.getText();
                 String EmployeeSSN = String.valueOf(PasswordFieldSSN.getPassword());
 
-                weisNewEmployee = createNewWeisEmployee(EmployeeFName, EmployeeMName, EmployeeLName, EmployeeEmailAddress, EmployeeAddress, EmployeePhoneNumber, EmployeeSSN, EmployeePassword);
+                weisNewEmployee = createNewWeisEmployee(Employee_id, EmployeeFName, EmployeeMName, EmployeeLName, EmployeeEmailAddress, EmployeeAddress, EmployeePhoneNumber, EmployeeSSN, EmployeePassword);
 
 
                 if (weisNewEmployee != null)
                 {
                     dispose();
+                    CreateAccountSuccessful createAccountSuccessful = new CreateAccountSuccessful(null);
                 }
                 else if(EmployeeFName.isEmpty())
                 {
@@ -81,6 +81,13 @@ public class CreateAccountForm extends JDialog
                     JOptionPane.showMessageDialog(CreateAccountForm.this,
                             "Error: Email field is empty, please enter an email",
                             "Empty Create Account Email",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(!EmployeeEmailAddress.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"))
+                {
+                    JOptionPane.showMessageDialog(CreateAccountForm.this,
+                            "Error: Email is not in the right format",
+                            "Wrong Email Format",
                             JOptionPane.ERROR_MESSAGE);
                 }
                 else if(EmployeeAddress.isEmpty())
@@ -126,18 +133,6 @@ public class CreateAccountForm extends JDialog
                             JOptionPane.ERROR_MESSAGE);
                 }
                 else {
-
-                }
-
-                weisNewEmployee = createNewWeisEmployee(EmployeeFName, EmployeeMName, EmployeeLName, EmployeeEmailAddress, EmployeeAddress, EmployeePhoneNumber, EmployeeSSN, EmployeePassword);
-
-                if(weisNewEmployee != null)
-                {
-                    dispose();
-                    CreateAccountSuccessful createAccountSuccessful = new CreateAccountSuccessful(null);
-                }
-                else
-                {
                     JOptionPane.showMessageDialog(CreateAccountForm.this,
                             "Error: Account Created Failed",
                             "Account Not Created",
@@ -161,7 +156,7 @@ public class CreateAccountForm extends JDialog
 
     public Employee weisNewEmployee;
 
-    private Employee createNewWeisEmployee(String EmployeeFName, String EmployeeMName, String EmployeeLName, String EmployeeEmailAddress, String EmployeeAddress, String EmployeePhoneNumber, String EmployeeSSN, String EmployeePassword)
+    private Employee createNewWeisEmployee(String Employee_id, String EmployeeFName, String EmployeeMName, String EmployeeLName, String EmployeeEmailAddress, String EmployeeAddress, String EmployeePhoneNumber, String EmployeeSSN, String EmployeePassword)
     {
         Employee newWeisEmployee = null;
 
@@ -170,25 +165,97 @@ public class CreateAccountForm extends JDialog
             Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
             Statement statement = connection.createStatement();
 
-            String sql = "INSERT INTO EMPLOYEE (First_name, Middle_name, Last_name, Email, Address, Phone, Ssn, Password)"
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO EMPLOYEE (Employee_id, First_name, Middle_name, Last_name, Email, Address, Phone, Ssn, Password)"
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, EmployeeFName);
-            preparedStatement.setString(2, EmployeeMName);
-            preparedStatement.setString(3, EmployeeLName);
-            preparedStatement.setString(4, EmployeeEmailAddress);
-            preparedStatement.setString(5, EmployeeAddress);
-            preparedStatement.setString(6, EmployeePhoneNumber);
-            preparedStatement.setString(7, EmployeeSSN);
-            preparedStatement.setString(8, EmployeePassword);
+            preparedStatement.setString(1, Employee_id);
+            preparedStatement.setString(2, EmployeeFName);
+            preparedStatement.setString(3, EmployeeMName);
+            preparedStatement.setString(4, EmployeeLName);
+            preparedStatement.setString(5, EmployeeEmailAddress);
+            preparedStatement.setString(6, EmployeeAddress);
+            preparedStatement.setString(7, EmployeePhoneNumber);
+            preparedStatement.setString(8, EmployeeSSN);
+            preparedStatement.setString(9, EmployeePassword);
 
             int employeeTableRows = preparedStatement.executeUpdate();
+
+            //Check if Email Exists
+            try {
+
+                PreparedStatement prepareStatement = connection.prepareStatement("SELECT * FROM EMPLOYEE WHERE Email = ?");
+
+                preparedStatement.setString(1, EmployeeEmailAddress);
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next())
+                {
+                    JOptionPane.showMessageDialog(CreateAccountForm.this,
+                            "Error: Email is already registered with us. Please enter a new one, that is not already registered",
+                            "Duplicate Email Found",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+
+
+            //Check if SSN Already Exists
+            try {
+
+                PreparedStatement prepareStatement = connection.prepareStatement("SELECT * FROM EMPLOYEE WHERE SSN = ?");
+
+                preparedStatement.setString(1, EmployeeSSN);
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next())
+                {
+                    JOptionPane.showMessageDialog(CreateAccountForm.this,
+                            "Error: SSN is already registered with us. Please enter your personal SSN and not anothers",
+                            "Duplicate SSN Found",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+
+
+            } catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+
+            //Check if Employee ID Already Exists
+            try {
+
+                PreparedStatement prepareStatement = connection.prepareStatement("SELECT * FROM EMPLOYEE WHERE Employee_id = ?");
+
+                preparedStatement.setString(1, Employee_id);
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next())
+                {
+                    JOptionPane.showMessageDialog(CreateAccountForm.this,
+                            "Error: Employee ID already exists, please choose another one",
+                            "Duplicate Employee ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+
+
+            } catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+
+
+
+
+
             if (employeeTableRows > 0)
             {
-                newWeisEmployee = new Employee();
-                newWeisEmployee.EmployeeEmailAddress = EmployeeEmailAddress;
-                newWeisEmployee.EmployeePassword = EmployeePassword;
+                newWeisEmployee = Employee.getInstance(Employee_id, EmployeeEmailAddress, EmployeePassword);
                 newWeisEmployee.EmployeeFName = EmployeeFName;
                 newWeisEmployee.EmployeeMName = EmployeeMName;
                 newWeisEmployee.EmployeeLName = EmployeeLName;
@@ -224,3 +291,5 @@ public class CreateAccountForm extends JDialog
         }
     }
 }
+
+

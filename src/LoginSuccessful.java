@@ -5,14 +5,14 @@ import java.awt.event.ActionListener;
 
 public class LoginSuccessful extends JDialog
 {
-    private JPanel LoginSucessfulPanel;
+    private JPanel LoginSuccessfulPanel;
     private JButton GoToAccountButton;
 
     public LoginSuccessful (JFrame parent)
     {
         super(parent);
         setTitle("Weis Markets - Login Successful");
-        setContentPane(LoginSucessfulPanel);
+        setContentPane(LoginSuccessfulPanel);
         setMinimumSize(new Dimension(450 , 400));
         setModal(true);
         setLocationRelativeTo(parent);

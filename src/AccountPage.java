@@ -12,23 +12,37 @@ public class AccountPage extends JDialog{
     private JButton shipmentsButton;
     private JButton inventoryButton;
     private JButton accountButton;
+    private JLabel employeeEmail;
+    private JLabel employeePassword;
+    private JButton logOutButton;
+    private JButton switchAccountsButton;
+    private JLabel employeeID;
 
-    public AccountPage (JFrame parent)
-    {
+    private Employee weisEmployee;
 
-        super(parent);
+
+    private int Employee_id;
+
+
+    public AccountPage (Employee weisEmployee) {
+
+        this.weisEmployee = weisEmployee;
         setTitle("Weis Markets - Home Page");
         setContentPane(AccountPagePanel);
         setMinimumSize(new Dimension(1535,850));
         setModal(true);
-        setLocationRelativeTo(parent);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        employeeID.setText(weisEmployee.getEmployee_id());
+        employeeEmail.setText(weisEmployee.getEmployeeEmailAddress());
+        employeePassword.setText(weisEmployee.getEmployeePassword());
+
 
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                HomePage homePage = new HomePage(null);
+                HomePage homePage = new HomePage(weisEmployee);
             }
         });
 
@@ -38,6 +52,7 @@ public class AccountPage extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 CategoryPage categoryPage = new CategoryPage(null);
+                //CategoryPage categoryPage = new CategoryPage(weisEmployee);
             }
         });
 
@@ -46,6 +61,7 @@ public class AccountPage extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 ProductLocationPage productLocationPage = new ProductLocationPage(null);
+                //ProductLocationPage productLocationPage = new ProductLocationPage(weisEmployee);
             }
         });
 
@@ -54,6 +70,7 @@ public class AccountPage extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 SupplierPage supplierPage = new SupplierPage(null);
+                //SupplierPage supplierPage = new SupplierPage(weisEmployee);
             }
         });
 
@@ -63,6 +80,7 @@ public class AccountPage extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 ShipmentPage shipmentPage = new ShipmentPage(null);
+                //ShipmentPage shipmentPage = new ShipmentPage(weisEmployee);
             }
         });
 
@@ -79,14 +97,35 @@ public class AccountPage extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                AccountPage accountPage = new AccountPage(null);
+                AccountPage accountPage = new AccountPage(weisEmployee);
             }
         });
 
+
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+
+        switchAccountsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                EmployeeLoginForm employeeLoginForm = new EmployeeLoginForm(null);
+            }
+        });
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        AccountPage accountPage = new AccountPage(null);
+
+    public static void main(String[] args)
+    {
+        String Employee_id = "";
+        String EmployeeEmailAddress = "";
+        String EmployeePassword = "";
+        Employee weisEmployee = Employee.getInstance(Employee_id, EmployeeEmailAddress, EmployeePassword);
+        AccountPage accountPage = new AccountPage(weisEmployee);
     }
 }

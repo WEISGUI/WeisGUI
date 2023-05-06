@@ -13,14 +13,14 @@ public class HomePage extends JDialog{
     private JButton inventoryButton;
     private JButton accountButton;
 
-    public HomePage (JFrame parent)
+    private Employee weisEmployee;
+    public HomePage (Employee weisEmployee)
     {
-        super(parent);
+        this.weisEmployee = weisEmployee;
         setTitle("Weis Markets - Home Page");
         setContentPane(HomePagePanel);
         setMinimumSize(new Dimension(1535,850));
         setModal(true);
-        setLocationRelativeTo(parent);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         homeButton.addActionListener(new ActionListener() {
@@ -78,7 +78,7 @@ public class HomePage extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                AccountPage accountPage = new AccountPage(null);
+                AccountPage accountPage = new AccountPage(weisEmployee);
             }
         });
 
