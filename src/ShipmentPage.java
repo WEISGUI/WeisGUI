@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class ShipmentPage extends JFrame {
 
-    public ShipmentPage() {
+    public ShipmentPage(JFrame parent) {
         setTitle("Shipments Page");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
@@ -111,6 +111,7 @@ public class ShipmentPage extends JFrame {
     }
 
     public static void main(String[] args) {
-        new ShipmentPage();
+
+        ShipmentPage shipmentPage = new ShipmentPage(null);
     }
 }

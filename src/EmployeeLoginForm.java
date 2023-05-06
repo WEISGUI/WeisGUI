@@ -38,6 +38,7 @@ public class EmployeeLoginForm extends JDialog
                     if (weisEmployee != null)
                     {
                         dispose();
+                        LoginSuccessful loginSuccessful = new LoginSuccessful(null);
                     }
                     else if(EmployeeEmailAddress.isEmpty())
                     {
@@ -88,7 +89,7 @@ public class EmployeeLoginForm extends JDialog
             Statement statement = connection.createStatement();
 
             //localhost:3306
-            String sql = "SELECT * FROM employee WHERE EmployeeEmail=? AND EmployeePassword=?";
+            String sql = "SELECT * FROM EMPLOYEE WHERE Email=? AND Password=?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, EmployeeEmailAddress);
@@ -99,8 +100,8 @@ public class EmployeeLoginForm extends JDialog
             if (resultSet.next())
             {
                 weisEmployee = new Employee();
-                weisEmployee.EmployeeEmailAddress = resultSet.getString("EmployeeEmail");
-                weisEmployee.EmployeePassword = resultSet.getString("EmployeePassword");
+                weisEmployee.EmployeeEmailAddress = resultSet.getString("Email");
+                weisEmployee.EmployeePassword = resultSet.getString("Password");
             }
 
         }

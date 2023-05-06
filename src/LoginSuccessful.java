@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LoginSuccessful extends JDialog
 {
@@ -15,6 +17,14 @@ public class LoginSuccessful extends JDialog
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        GoToAccountButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                AccountPage accountPage = new AccountPage(null);
+            }
+        });
         setVisible(true);
     }
 

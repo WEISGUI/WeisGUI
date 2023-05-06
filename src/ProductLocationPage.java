@@ -17,7 +17,7 @@ public class ProductLocationPage extends JFrame {
     private JButton button1;
     private JRadioButton radioButton1;
 
-    public ProductLocationPage() {
+    public ProductLocationPage(JFrame parent) {
         setTitle("Product Location Page");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
@@ -29,7 +29,7 @@ public class ProductLocationPage extends JFrame {
         // Top navigation bar panel
         topNav = new JPanel();
         topNav.setLayout(new FlowLayout(FlowLayout.LEFT));
-        topNav.setBackground(Color.WHITE);
+        topNav.setBackground(Color.RED);
         topNav.add(new JButton("Home"));
         topNav.add(new JButton("Category"));
         topNav.add(new JButton("Products"));
@@ -79,9 +79,10 @@ public class ProductLocationPage extends JFrame {
         getContentPane().add(new JScrollPane(table), BorderLayout.SOUTH);
 
         pack();
+        setVisible(true);
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new ProductLocationPage().setVisible(true));
+        ProductLocationPage productLocationPage = new ProductLocationPage(null);
     }
 }

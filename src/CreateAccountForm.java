@@ -134,6 +134,7 @@ public class CreateAccountForm extends JDialog
                 if(weisNewEmployee != null)
                 {
                     dispose();
+                    CreateAccountSuccessful createAccountSuccessful = new CreateAccountSuccessful(null);
                 }
                 else
                 {
@@ -169,7 +170,7 @@ public class CreateAccountForm extends JDialog
             Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
             Statement statement = connection.createStatement();
 
-            String sql = "INSERT INTO employee (EmployeeFName, EmployeeMName, EmployeeLName, EmployeeEmail, EmployeeAddress, EmployeePhoneNumber, EmployeeSSN, EmployeePassword)"
+            String sql = "INSERT INTO EMPLOYEE (First_name, Middle_name, Last_name, Email, Address, Phone, Ssn, Password)"
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);

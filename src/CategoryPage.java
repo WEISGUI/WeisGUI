@@ -2,24 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CategoryPage extends JFrame {
-    private JPanel CategoryPagePanel;
-    private JLabel CreateAccountTextLogo;
-    private JLabel WeisTextLogo;
-    private JTextField TextFieldFName;
-    private JTextField TextFieldMName;
-    private JTextField TextFieldLName;
-    private JTextField TextFieldCreateAccountEmailAddress;
-    private JTextField TextFieldAddress;
-    private JTextField TextFieldPhoneNumber;
-    private JPasswordField PasswordFieldEmployeePassword;
-    private JPasswordField PasswordFieldSSN;
-    private JButton CreateAccountButton;
-    private JButton GoToLoginPageButton;
 
-    public CategoryPage() {
+    public CategoryPage (JFrame Parent) {
         setTitle("Category Page");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(800, 600));
+        setPreferredSize(new Dimension(1535,850));
 
         // Create a panel for the logo and the navbar
         JPanel headerPanel = new JPanel();
@@ -73,6 +60,6 @@ public class CategoryPage extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(CategoryPage::new);
+        CategoryPage categoryPage = new CategoryPage(null);
     }
 }

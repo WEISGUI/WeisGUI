@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class SupplierPage extends JFrame {
 
-    public SupplierPage() {
+    public SupplierPage(JFrame Parent) {
         // Set the window title
         setTitle("Suppliers Page");
 
@@ -107,12 +107,11 @@ public class SupplierPage extends JFrame {
         contentPane.add(formPanel, BorderLayout.WEST);
         contentPane.add(tablePanel, BorderLayout.CENTER);
         setContentPane(contentPane);
+
+        setVisible(true);
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            SupplierPage supplierPage = new SupplierPage();
-            supplierPage.setVisible(true);
-        });
+        SupplierPage supplierPage = new SupplierPage(null);
     }
 }
