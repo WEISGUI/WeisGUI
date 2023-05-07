@@ -13,6 +13,7 @@ public class HomePage extends JDialog{
     private JButton shipmentsButton;
     private JButton inventoryButton;
     private JButton accountButton;
+    private JButton productButton;
 
     private Employee weisEmployee;
     public HomePage (Employee weisEmployee)
@@ -84,6 +85,15 @@ public class HomePage extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 AccountPage accountPage = new AccountPage(weisEmployee);
+            }
+        });
+
+
+        productButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                ProductsPage productsPage = new ProductsPage(null);
             }
         });
 

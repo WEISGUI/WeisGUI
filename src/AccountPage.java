@@ -18,6 +18,7 @@ public class AccountPage extends JDialog{
     private JButton logOutButton;
     private JButton switchAccountsButton;
     private JLabel employeeID;
+    private JButton productButton;
 
     private Employee weisEmployee;
 
@@ -122,6 +123,15 @@ public class AccountPage extends JDialog{
                 EmployeeLoginForm employeeLoginForm = new EmployeeLoginForm(null);
             }
         });
+
+        productButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                ProductsPage productsPage = new ProductsPage(null);
+            }
+        });
+
         setVisible(true);
     }
 

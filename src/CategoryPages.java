@@ -27,6 +27,7 @@ public class CategoryPages extends JDialog {
     private JButton deleteCategoryButton;
     private JTable categoryTable;
     private JScrollPane categoryScrollPane;
+    private JButton productButton;
     private Employee weisEmployee;
     public CategoryPages(Employee weisEmployee) throws SQLException {
 
@@ -125,6 +126,14 @@ public class CategoryPages extends JDialog {
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
+            }
+        });
+
+        productButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                ProductsPage productsPage = new ProductsPage(null);
             }
         });
 

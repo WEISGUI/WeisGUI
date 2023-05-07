@@ -25,6 +25,7 @@ public class SuppliersPage extends JDialog {
     private JTextField supplierEmailTxtField;
     private JTextField supplierNameTxtField;
     private JTextField supplierIDTxtField;
+    private JButton productButton;
 
     public SuppliersPage(Employee weisEmployee)
     {
@@ -96,6 +97,14 @@ public class SuppliersPage extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 AccountPage accountPage = new AccountPage(weisEmployee);
+            }
+        });
+
+        productButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                ProductsPage productsPage = new ProductsPage(null);
             }
         });
 

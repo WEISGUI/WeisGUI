@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-public class ProductsLocationPage extends JDialog {
-    private JPanel ProductLocationPanel;
+public class ProductsPage extends JDialog{
+    private JPanel ProductsPagePanel;
     private JButton productLocationButton;
     private JButton categoriesButton;
     private JButton homeButton;
@@ -13,22 +13,29 @@ public class ProductsLocationPage extends JDialog {
     private JButton shipmentsButton;
     private JButton inventoryButton;
     private JButton accountButton;
-    private JTextField productLocationIDTxtField;
-    private JButton addProductLocation;
-    private JButton updateProductLocationButton;
-    private JButton deleteProductLocationButton;
-    private JScrollPane productLocationScrollPane;
-    private JTable productLocationTable;
-    private JTextField productLocationShelfTxtField;
-    private JTextField productLocationAisleNumberTxtField;
     private JButton productButton;
+    private JPanel CategoryPagePane;
+    private JTextField productNameTxtField;
+    private JTextField expirationDateTxtField;
+    private JTextField productIDTxtField;
+    private JButton addProductButton;
+    private JButton updateProductButton;
+    private JButton deleteProductButton;
+    private JScrollPane productScrollPane;
+    private JTable productTable;
+    private JTextField productSerialNoTxtField;
+    private JTextField priceTxtField;
+    private JTextField productDescriptionTxtField;
+    private JComboBox categoryNameComboBox;
+    private JComboBox supplierIdComboBox;
 
     private Employee weisEmployee;
-    public ProductsLocationPage(Employee weisEmployee)
+
+    public ProductsPage(Employee weisEmployee)
     {
         this.weisEmployee = weisEmployee;
-        setTitle("Weis Markets - Products Location Page");
-        setContentPane(ProductLocationPanel);
+        setTitle("Weis Markets - Products Page");
+        setContentPane(ProductsPagePanel);
         setMinimumSize(new Dimension(1535,850));
         setModal(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -97,6 +104,7 @@ public class ProductsLocationPage extends JDialog {
             }
         });
 
+
         productButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -106,9 +114,11 @@ public class ProductsLocationPage extends JDialog {
         });
 
         setVisible(true);
+
     }
 
-    public static void main(String[] args) {
-        ProductsLocationPage productsLocationPage = new ProductsLocationPage(null);
+    public static void main(String[] args)
+    {
+        ProductsPage productsPage = new ProductsPage(null);
     }
 }
