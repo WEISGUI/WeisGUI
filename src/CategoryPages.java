@@ -60,7 +60,11 @@ public class CategoryPages extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                ProductsLocationPage productsLocationPage = new ProductsLocationPage(null);
+                try {
+                    ProductsLocationPage productsLocationPage = new ProductsLocationPage(null);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         suppliersButton.addActionListener(new ActionListener() {
@@ -92,7 +96,7 @@ public class CategoryPages extends JDialog {
             }
         });
 
-        //Add Category
+        //Add Catgegory
         addCategoryButton.addActionListener(new ActionListener()
         {
             @Override
@@ -122,8 +126,6 @@ public class CategoryPages extends JDialog {
                     categoryIDTxtField.setText("");
                     categoryNameTxtField.setText("");
                     categoryDescriptionTxtField.setText("");
-
-                    System.out.println(Category_id);
 
 
                 } catch (SQLException ex) {

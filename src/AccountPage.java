@@ -67,7 +67,11 @@ public class AccountPage extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                ProductsLocationPage productLocationPage = new ProductsLocationPage(null);
+                try {
+                    ProductsLocationPage productLocationPage = new ProductsLocationPage(null);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
                 //ProductLocationPage productLocationPage = new ProductLocationPage(weisEmployee);
             }
         });

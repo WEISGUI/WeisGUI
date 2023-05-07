@@ -62,7 +62,11 @@ public class SuppliersPage extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                ProductsLocationPage productsLocationPage = new ProductsLocationPage(null);
+                try {
+                    ProductsLocationPage productsLocationPage = new ProductsLocationPage(null);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 

@@ -1,8 +1,10 @@
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ProductsLocationPage extends JDialog {
     private JPanel ProductLocationPanel;
@@ -24,7 +26,7 @@ public class ProductsLocationPage extends JDialog {
     private JButton productButton;
 
     private Employee weisEmployee;
-    public ProductsLocationPage(Employee weisEmployee)
+    public ProductsLocationPage(Employee weisEmployee) throws SQLException
     {
         this.weisEmployee = weisEmployee;
         setTitle("Weis Markets - Products Location Page");
@@ -33,6 +35,11 @@ public class ProductsLocationPage extends JDialog {
         setModal(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+
+        Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM LOCATION");
+        ResultSet resultSet = selectStatement.executeQuery();
+        productLocationTable.setModel(DbUtils.resultSetToTableModel(resultSet));
 
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -59,7 +66,11 @@ public class ProductsLocationPage extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                ProductsLocationPage productsLocationPage = new ProductsLocationPage(null);
+                try {
+                    ProductsLocationPage productsLocationPage = new ProductsLocationPage(null);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -106,10 +117,59 @@ public class ProductsLocationPage extends JDialog {
             }
         });
 
+
+        addProductLocation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String Location_id = productLocationIDTxtField.getText();
+                String Aisle = productLocationAisleNumberTxtField.getText();
+                String Shelf = productLocationShelfTxtField.getText();
+
+                try {
+
+                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+
+                    String sql = "INSERT INTO LOCATION (Location_id, Aisle, Shelf)"
+                            + "VALUES (?, ?, ?)";
+
+                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                    preparedStatement.setString(1, Location_id);
+                    preparedStatement.setString(2, Aisle);
+                    preparedStatement.setString(3, Shelf);
+                    preparedStatement.executeUpdate();
+
+                    PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM LOCATION");
+                    ResultSet resultSet = selectStatement.executeQuery();
+                    productLocationTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+                    productLocationIDTxtField.setText("");
+                    productLocationAisleNumberTxtField.setText("");
+                    productLocationShelfTxtField.setText("");
+
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+            }
+        });
+
+        updateProductLocationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        deleteProductLocationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
         setVisible(true);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         ProductsLocationPage productsLocationPage = new ProductsLocationPage(null);
     }
 }
