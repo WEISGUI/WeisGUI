@@ -91,6 +91,8 @@ public class CategoryPages extends JDialog {
                 AccountPage accountPage = new AccountPage(weisEmployee);
             }
         });
+
+        //Add Category
         addCategoryButton.addActionListener(new ActionListener()
         {
             @Override
@@ -138,12 +140,41 @@ public class CategoryPages extends JDialog {
             }
         });
 
+        //Update Category
+
         updateCategoryButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e)
+            {
+                String Category_id = categoryIDTxtField.getText();
+                String Category_name = categoryNameTxtField.getText();
+                String Category_description = categoryDescriptionTxtField.getText();
 
+                try {
+                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+                    PreparedStatement preparedStatement = connection.prepareStatement("UPDATE CATEGORY SET Category_name = ?, Category_description = ? WHERE Category_id = ?");
+
+                    preparedStatement.setString(1, Category_name);
+                    preparedStatement.setString(2, Category_description);
+                    preparedStatement.setString(3, Category_id);
+                    preparedStatement.executeUpdate();
+
+                    PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM CATEGORY");
+                    ResultSet resultSet = selectStatement.executeQuery();
+                    categoryTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+                    categoryIDTxtField.setText("");
+                    categoryNameTxtField.setText("");
+                    categoryDescriptionTxtField.setText("");
+                }
+                catch (SQLException e1)
+                {
+                    e1.printStackTrace();
+                }
             }
         });
+
+        //Delete Category
         deleteCategoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
