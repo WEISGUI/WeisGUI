@@ -52,6 +52,7 @@ public class AccountPage extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
+
                 try {
                     CategoryPages categoryPages = new CategoryPages(null);
                 } catch (SQLException ex) {

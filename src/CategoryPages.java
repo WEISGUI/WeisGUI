@@ -30,13 +30,17 @@ public class CategoryPages extends JDialog {
     private Employee weisEmployee;
     public CategoryPages(Employee weisEmployee) throws SQLException {
 
+        this.weisEmployee = weisEmployee;
         setTitle("Weis Markets - Category Page");
         setContentPane(CategoryPagePanel);
         setMinimumSize(new Dimension(1535,850));
-
         setModal(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM CATEGORY");
+        ResultSet resultSet = selectStatement.executeQuery();
+        categoryTable.setModel(DbUtils.resultSetToTableModel(resultSet));
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -87,7 +91,6 @@ public class CategoryPages extends JDialog {
         });
         addCategoryButton.addActionListener(new ActionListener()
         {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 String Category_id = categoryIDTxtField.getText();
