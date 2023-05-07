@@ -77,7 +77,11 @@ public class InventoryPage extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                SuppliersPage suppliersPage = new SuppliersPage(null);
+                try {
+                    SuppliersPage suppliersPage = new SuppliersPage(null);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
