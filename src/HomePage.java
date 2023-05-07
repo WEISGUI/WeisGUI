@@ -49,7 +49,7 @@ public class HomePage extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                ProductLocationPage productLocationPage = new ProductLocationPage(null);
+                ProductsLocationPage productsLocationPage = new ProductsLocationPage(null);
             }
         });
 
@@ -57,7 +57,7 @@ public class HomePage extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                SupplierPage supplierPage = new SupplierPage(null);
+                SuppliersPage suppliersPage = new SuppliersPage(null);
             }
         });
 

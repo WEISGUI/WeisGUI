@@ -66,7 +66,7 @@ public class AccountPage extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                ProductLocationPage productLocationPage = new ProductLocationPage(null);
+                ProductsLocationPage productLocationPage = new ProductsLocationPage(null);
                 //ProductLocationPage productLocationPage = new ProductLocationPage(weisEmployee);
             }
         });
@@ -75,7 +75,7 @@ public class AccountPage extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                SupplierPage supplierPage = new SupplierPage(null);
+                SuppliersPage supplierPage = new SuppliersPage(null);
                 //SupplierPage supplierPage = new SupplierPage(weisEmployee);
             }
         });
