@@ -162,6 +162,31 @@ public class ProductsLocationPage extends JDialog {
         deleteProductLocationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String Location_id = productLocationIDTxtField.getText();
+                String Aisle = productLocationAisleNumberTxtField.getText();
+                String Shelf = productLocationShelfTxtField.getText();
+
+                try{
+                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+                    PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM LOCATION WHERE Location_id = ? AND Aisle = ? AND Shelf = ?");
+
+                    preparedStatement.setString(1, Location_id);
+                    preparedStatement.setString(2, Aisle);
+                    preparedStatement.setString(3, Shelf);
+                    preparedStatement.executeUpdate();
+
+                    PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM LOCATION");
+                    ResultSet resultSet = selectStatement.executeQuery();
+                    productLocationTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+                    productLocationIDTxtField.setText("");
+                    productLocationAisleNumberTxtField.setText("");
+                    productLocationShelfTxtField.setText("");
+                }
+                catch (SQLException e1)
+                {
+                    e1.printStackTrace();
+                }
 
             }
         });
