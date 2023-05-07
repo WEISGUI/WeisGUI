@@ -277,8 +277,6 @@ public class CreateAccountForm extends JDialog
     }
 
 
-
-
     public static void main(String[] args)
     {
         CreateAccountForm createAccountForm = new CreateAccountForm(null);
