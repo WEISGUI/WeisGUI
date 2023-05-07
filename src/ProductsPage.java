@@ -1,8 +1,10 @@
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ProductsPage extends JDialog{
     private JPanel ProductsPagePanel;
@@ -31,7 +33,7 @@ public class ProductsPage extends JDialog{
 
     private Employee weisEmployee;
 
-    public ProductsPage(Employee weisEmployee)
+    public ProductsPage(Employee weisEmployee) throws SQLException
     {
         this.weisEmployee = weisEmployee;
         setTitle("Weis Markets - Products Page");
@@ -39,6 +41,11 @@ public class ProductsPage extends JDialog{
         setMinimumSize(new Dimension(1535,850));
         setModal(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM PRODUCT");
+        ResultSet resultSet = selectStatement.executeQuery();
+        productTable.setModel(DbUtils.resultSetToTableModel(resultSet));
 
 
         homeButton.addActionListener(new ActionListener() {
@@ -118,7 +125,11 @@ public class ProductsPage extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                ProductsPage productsPage = new ProductsPage(null);
+                try {
+                    ProductsPage productsPage = new ProductsPage(null);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -126,8 +137,7 @@ public class ProductsPage extends JDialog{
 
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws SQLException {
         ProductsPage productsPage = new ProductsPage(null);
     }
 }

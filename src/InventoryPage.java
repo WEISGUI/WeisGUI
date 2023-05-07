@@ -118,7 +118,11 @@ public class InventoryPage extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                ProductsPage productsPage = new ProductsPage(null);
+                try {
+                    ProductsPage productsPage = new ProductsPage(null);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
