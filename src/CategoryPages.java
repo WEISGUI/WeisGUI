@@ -80,7 +80,8 @@ public class CategoryPages extends JDialog {
         inventoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                dispose();
+                InventoryPage inventoryPage = new InventoryPage(null);
             }
         });
         accountButton.addActionListener(new ActionListener() {

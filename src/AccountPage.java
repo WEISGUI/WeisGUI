@@ -96,6 +96,7 @@ public class AccountPage extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
+                InventoryPage inventoryPage = new InventoryPage(null);
             }
         });
 

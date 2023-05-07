@@ -4,23 +4,38 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-public class HomePage extends JDialog{
-    private JPanel HomePagePanel;
+public class InventoryPage extends JDialog {
+    private JPanel InventoryPagePane;
+    private JPanel InventoryPagePanel;
+    private JButton productLocationButton;
     private JButton categoriesButton;
     private JButton homeButton;
-    private JButton productLocationButton;
     private JButton suppliersButton;
     private JButton shipmentsButton;
     private JButton inventoryButton;
     private JButton accountButton;
     private JButton productButton;
+    private JTextField updatedAmountTxtField;
+    private JTextField inventoryValueTxtField;
+    private JTextField inventoryIDTxtField;
+    private JButton addInventoryButton;
+    private JButton updateInventoryButton;
+    private JButton deleteInventoryButton;
+    private JScrollPane inventoryScrollPane;
+    private JTable inventoryTable;
+    private JTextField updatedDateTxtField;
+    private JTextField quantityTxtField;
+    private JComboBox employeeIDComboBox;
+    private JComboBox locationIDComboBox;
+    private JComboBox productIDComboBox;
 
     private Employee weisEmployee;
-    public HomePage (Employee weisEmployee)
+
+    public InventoryPage(Employee weisEmployee)
     {
         this.weisEmployee = weisEmployee;
-        setTitle("Weis Markets - Home Page");
-        setContentPane(HomePagePanel);
+        setTitle("Weis Markets - Inventory Page");
+        setContentPane(InventoryPagePanel);
         setMinimumSize(new Dimension(1535,850));
         setModal(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -74,7 +89,8 @@ public class HomePage extends JDialog{
 
         inventoryButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e)
+            {
                 dispose();
                 InventoryPage inventoryPage = new InventoryPage(null);
             }
@@ -99,10 +115,11 @@ public class HomePage extends JDialog{
         });
 
         setVisible(true);
+
     }
 
     public static void main(String[] args)
     {
-        HomePage homePage = new HomePage(null);
+        InventoryPage inventoryPage = new InventoryPage(null);
     }
 }

@@ -14,7 +14,7 @@ public class ProductsPage extends JDialog{
     private JButton inventoryButton;
     private JButton accountButton;
     private JButton productButton;
-    private JPanel CategoryPagePane;
+    private JPanel ProductsPagePane;
     private JTextField productNameTxtField;
     private JTextField expirationDateTxtField;
     private JTextField productIDTxtField;
@@ -92,6 +92,7 @@ public class ProductsPage extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
+                InventoryPage inventoryPage = new InventoryPage(null);
             }
         });
 
