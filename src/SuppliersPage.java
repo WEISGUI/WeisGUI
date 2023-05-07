@@ -13,15 +13,15 @@ public class SuppliersPage extends JDialog {
     private JButton inventoryButton;
     private JButton accountButton;
     private JTextField supplierAddressTxtField;
-    private JTextField supplierNameTxtField;
     private JButton addSupplierButton;
     private JButton updateSupplierButton;
     private JButton deleteSupplierButton;
     private JScrollPane supplierScrollPane;
     private JTable supplierTable;
-    private JLabel supplierIDTxtField;
     private JTextField supplierPhoneTxtField;
     private JTextField supplierEmailTxtField;
+    private JTextField supplierNameTxtField;
+    private JTextField supplierIDTxtField;
 
     public SuppliersPage(Employee weisEmployee)
     {
