@@ -138,6 +138,43 @@ public class CategoryPages extends JDialog {
             }
         });
 
+        updateCategoryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        deleteCategoryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String Category_id = categoryIDTxtField.getText();
+                String Category_name = categoryNameTxtField.getText();
+
+                try{
+                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+                    PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM CATEGORY WHERE Category_id = ? AND Category_name = ?");
+
+                    preparedStatement.setString(1, Category_id);
+                    preparedStatement.setString(2, Category_name);
+                    preparedStatement.executeUpdate();
+
+                    PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM CATEGORY");
+                    ResultSet resultSet = selectStatement.executeQuery();
+                    categoryTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+                    categoryIDTxtField.setText("");
+                    categoryNameTxtField.setText("");
+                    categoryDescriptionTxtField.setText("");
+                }
+                catch (SQLException e1)
+                {
+                    e1.printStackTrace();
+                }
+
+            }
+        });
+
         setVisible(true);
     }
 
