@@ -170,11 +170,70 @@ public class SuppliersPage extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                String Supplier_id = supplierIDTxtField.getText();
+                String Supplier_name = supplierNameTxtField.getText();
+                String Supplier_address = supplierAddressTxtField.getText();
+                String Supplier_phone = supplierPhoneTxtField.getText();
+                String Supplier_email = supplierEmailTxtField.getText();
+
+                try {
+                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+                    PreparedStatement preparedStatement = connection.prepareStatement("UPDATE SUPPLIER SET Supplier_name = ?, Supplier_address = ?, Supplier_phone = ?, Supplier_email = ? WHERE Supplier_id = ?");
+
+
+                    preparedStatement.setString(1, Supplier_name);
+                    preparedStatement.setString(2, Supplier_address);
+                    preparedStatement.setString(3, Supplier_phone);
+                    preparedStatement.setString(4, Supplier_email);
+                    preparedStatement.setString(5, Supplier_id);
+                    preparedStatement.executeUpdate();
+
+                    PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM SUPPLIER");
+                    ResultSet resultSet = selectStatement.executeQuery();
+                    supplierTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+                    supplierIDTxtField.setText("");
+                    supplierNameTxtField.setText("");
+                    supplierAddressTxtField.setText("");
+                    supplierPhoneTxtField.setText("");
+                    supplierEmailTxtField.setText("");
+                }
+                catch (SQLException e1)
+                {
+                    e1.printStackTrace();
+                }
+
+
             }
         });
         deleteSupplierButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String Supplier_id = supplierIDTxtField.getText();
+                String Supplier_name = supplierNameTxtField.getText();
+
+                try{
+                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+                    PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM SUPPLIER WHERE Supplier_id = ? AND Supplier_name = ?");
+
+                    preparedStatement.setString(1, Supplier_id);
+                    preparedStatement.setString(2, Supplier_name);
+                    preparedStatement.executeUpdate();
+
+                    PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM SUPPLIER");
+                    ResultSet resultSet = selectStatement.executeQuery();
+                    supplierTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+                    supplierIDTxtField.setText("");
+                    supplierNameTxtField.setText("");
+                    supplierAddressTxtField.setText("");
+                    supplierPhoneTxtField.setText("");
+                    supplierEmailTxtField.setText("");
+                }
+                catch (SQLException e1)
+                {
+                    e1.printStackTrace();
+                }
 
             }
         });
