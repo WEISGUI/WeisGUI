@@ -14,8 +14,8 @@ public class ProductsLocationPage extends JDialog {
     private JButton addProductLocation;
     private JButton updateProductLocationButton;
     private JButton deleteProductLocationButton;
-    private JScrollPane supplierScrollPane;
-    private JTable supplierTable;
+    private JScrollPane productLocationScrollPane;
+    private JTable productLocationTable;
     private JTextField productLocationShelfTxtField;
     private JTextField productLocationAisleNumberTxtField;
 
