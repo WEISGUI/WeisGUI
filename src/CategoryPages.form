@@ -394,11 +394,13 @@
                       <text value="Catgory Table "/>
                     </properties>
                   </component>
-                  <scrollpane id="d1ca4">
+                  <scrollpane id="d1ca4" binding="categoryScrollPane">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
-                    <properties/>
+                    <properties>
+                      <background color="-16777216"/>
+                    </properties>
                     <border type="none"/>
                     <children>
                       <component id="a832" class="javax.swing.JTable" binding="categoryTable">

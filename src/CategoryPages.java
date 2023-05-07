@@ -1,4 +1,4 @@
-import com.mysql.cj.xdevapi.Table;
+import net.proteanit.sql.DbUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.sql.*;
 
 public class CategoryPages extends JDialog {
@@ -27,9 +26,9 @@ public class CategoryPages extends JDialog {
     private JButton updateCategoryButton;
     private JButton deleteCategoryButton;
     private JTable categoryTable;
+    private JScrollPane categoryScrollPane;
 
-    public CategoryPages(JFrame parent)
-    {
+    public CategoryPages(JFrame parent) throws SQLException {
         super(parent);
         setTitle("Weis Markets - Category Page");
         setContentPane(CategoryPagePanel);
@@ -37,8 +36,7 @@ public class CategoryPages extends JDialog {
         setLocationRelativeTo(parent);
         setModal(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-
+        
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -83,15 +81,17 @@ public class CategoryPages extends JDialog {
         });
         addCategoryButton.addActionListener(new ActionListener()
         {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 String Category_id = categoryIDTxtField.getText();
                 String Category_name = categoryNameTxtField.getText();
                 String Category_description = categoryDescriptionTxtField.getText();
 
-                Connection connection = null;
                 try {
-                    connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+
+                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+
                     String sql = "INSERT INTO CATEGORY (Category_id, Category_name, Category_description)"
                             + "VALUES (?, ?, ?)";
 
@@ -101,41 +101,29 @@ public class CategoryPages extends JDialog {
                     preparedStatement.setString(3, Category_description);
                     preparedStatement.executeUpdate();
 
-                    //updateCategoryTable();
+
+                    PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM CATEGORY");
+                    ResultSet resultSet = selectStatement.executeQuery();
+                    categoryTable.setModel(DbUtils.resultSetToTableModel(resultSet));
 
                     categoryIDTxtField.setText("");
                     categoryNameTxtField.setText("");
                     categoryDescriptionTxtField.setText("");
+
+                    System.out.println(Category_id);
+
+
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
             }
         });
 
-
         setVisible(true);
     }
 
-    void updateCategoryDatabase() throws SQLException
-    {
-
-    }
-
-    public void connect() throws SQLException {
-
-    }
-
-    void updateCategoryTable() throws SQLException
-    {
-
-
-
-    }
-    public static void main(String[] args)
+    public static void main(String[] args) throws SQLException
     {
         CategoryPages categoryPages = new CategoryPages(null);
     }
-
-
-
 }
