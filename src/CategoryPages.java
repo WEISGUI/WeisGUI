@@ -27,44 +27,49 @@ public class CategoryPages extends JDialog {
     private JButton deleteCategoryButton;
     private JTable categoryTable;
     private JScrollPane categoryScrollPane;
+    private Employee weisEmployee;
+    public CategoryPages(Employee weisEmployee) throws SQLException {
 
-    public CategoryPages(JFrame parent) throws SQLException {
-        super(parent);
         setTitle("Weis Markets - Category Page");
         setContentPane(CategoryPagePanel);
         setMinimumSize(new Dimension(1535,850));
-        setLocationRelativeTo(parent);
+
         setModal(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
+
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                dispose();
+                HomePage homePage = new HomePage(null);
             }
         });
         categoriesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                dispose();
+                CategoryPage categoryPage = new CategoryPage(null);
             }
         });
         productLocationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                dispose();
+                ProductLocationPage productLocationPage = new ProductLocationPage(null);
             }
         });
         suppliersButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                dispose();
+                SupplierPage supplierPage = new SupplierPage(null);
             }
         });
         shipmentsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                dispose();
+                ShipmentPage shipmentPage = new ShipmentPage(null);
             }
         });
         inventoryButton.addActionListener(new ActionListener() {
@@ -76,7 +81,8 @@ public class CategoryPages extends JDialog {
         accountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                dispose();
+                AccountPage accountPage = new AccountPage(weisEmployee);
             }
         });
         addCategoryButton.addActionListener(new ActionListener()

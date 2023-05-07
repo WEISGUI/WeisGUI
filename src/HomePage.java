@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class HomePage extends JDialog{
     private JPanel HomePagePanel;
@@ -36,7 +37,11 @@ public class HomePage extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                CategoryPage categoryPage = new CategoryPage(null);
+                try {
+                    CategoryPages categoryPages = new CategoryPages(null);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
