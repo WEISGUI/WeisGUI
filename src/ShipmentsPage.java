@@ -4,8 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-public class ProductsPage extends JDialog{
-    private JPanel ProductsPagePanel;
+public class ShipmentsPage extends JDialog{
+    private JPanel ShipmentsPagePane;
+    private JPanel ShipmentsPagePanel;
     private JButton productLocationButton;
     private JButton categoriesButton;
     private JButton homeButton;
@@ -14,32 +15,31 @@ public class ProductsPage extends JDialog{
     private JButton inventoryButton;
     private JButton accountButton;
     private JButton productButton;
-    private JPanel ProductsPagePane;
-    private JTextField productNameTxtField;
-    private JTextField expirationDateTxtField;
-    private JTextField productIDTxtField;
-    private JButton addProductButton;
-    private JButton updateProductButton;
-    private JButton deleteProductButton;
-    private JScrollPane productScrollPane;
-    private JTable productTable;
-    private JTextField productSerialNoTxtField;
-    private JTextField priceTxtField;
-    private JTextField productDescriptionTxtField;
-    private JComboBox categoryNameComboBox;
-    private JComboBox supplierIdComboBox;
+    private JTextField orderDateTxtField;
+    private JTextField shipmentPriceTxtField;
+    private JTextField shipmentIDTxtField;
+    private JButton addShipmentButton;
+    private JButton updateShipmentButton;
+    private JButton deleteShipmentButton;
+    private JScrollPane shipmentsScrollPane;
+    private JTable shipmentsTable;
+    private JTextField deliveryDateTxtField;
+    private JTextField quantityTxtField;
+    private JComboBox productIDComboBox;
+    private JComboBox inventoryIDComboBox;
+    private JComboBox supplierIDComboBox;
+    private JComboBox employeeIDComboBox;
 
     private Employee weisEmployee;
 
-    public ProductsPage(Employee weisEmployee)
+    public ShipmentsPage (Employee weisEmployee)
     {
         this.weisEmployee = weisEmployee;
-        setTitle("Weis Markets - Products Page");
-        setContentPane(ProductsPagePanel);
+        setTitle("Weis Markets - Shipments Page");
+        setContentPane(ShipmentsPagePanel);
         setMinimumSize(new Dimension(1535,850));
         setModal(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
 
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -90,7 +90,8 @@ public class ProductsPage extends JDialog{
 
         inventoryButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e)
+            {
                 dispose();
                 InventoryPage inventoryPage = new InventoryPage(null);
             }
@@ -115,11 +116,10 @@ public class ProductsPage extends JDialog{
         });
 
         setVisible(true);
-
     }
 
     public static void main(String[] args)
     {
-        ProductsPage productsPage = new ProductsPage(null);
+        ShipmentsPage shipmentsPage = new ShipmentsPage(null);
     }
 }

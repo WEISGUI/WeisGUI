@@ -79,7 +79,7 @@ public class SuppliersPage extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                ShipmentPage shipmentPage = new ShipmentPage(null);
+                ShipmentsPage shipmentsPage = new ShipmentsPage(null);
             }
         });
 
