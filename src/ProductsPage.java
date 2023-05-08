@@ -42,10 +42,50 @@ public class ProductsPage extends JDialog{
         setModal(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        //Populate Products Table
         Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
         PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM PRODUCT");
         ResultSet resultSet = selectStatement.executeQuery();
         productTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+
+        //Populate Supplier ComboBox
+        String supplierID = null;
+        try {
+
+            connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+
+            String sql = "SELECT * FROM SUPPLIER";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet1 = preparedStatement.executeQuery();
+
+            while(resultSet1.next())
+            {
+                supplierIdComboBox.addItem(resultSet1.getString("Supplier_id"));
+                supplierIdComboBox.setVisible(true);
+            }
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+
+
+        //Populate Category ComboBox
+        String categoryID = null;
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+
+            String sql = "SELECT * FROM CATEGORY";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet2 = preparedStatement.executeQuery();
+
+            while (resultSet2.next()) {
+                categoryNameComboBox.addItem(resultSet2.getString("Category_id"));
+                categoryNameComboBox.setVisible(true);
+            }
+        } catch (SQLException ex){
+            throw new RuntimeException(ex);
+        }
 
 
         homeButton.addActionListener(new ActionListener() {
@@ -133,8 +173,70 @@ public class ProductsPage extends JDialog{
             }
         });
 
-        setVisible(true);
+        addProductButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String Product_id = productIDTxtField.getText();
+                String Exp_date = expirationDateTxtField.getText();
+                String Product_name = productNameTxtField.getText();
+                String Product_serial = productSerialNoTxtField.getText();
+                String Price = priceTxtField.getText();
+                String Product_description = productDescriptionTxtField.getText();
+                String categorySelection = categoryNameComboBox.getSelectedItem().toString();
+                String supplierSelection = supplierIdComboBox.getSelectedItem().toString();
 
+
+                try {
+
+                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+
+                    String sql = "INSERT INTO PRODUCT (Product_id, Exp_date, Product_name, Product_serial, Price, Product_description, Category_name, Supplier_id)"
+                            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                    preparedStatement.setString(1, Product_id);
+                    preparedStatement.setString(2, Exp_date);
+                    preparedStatement.setString(3, Product_name);
+                    preparedStatement.setString(4, Product_serial);
+                    preparedStatement.setString(5, Price);
+                    preparedStatement.setString(6, Product_description);
+                    preparedStatement.setString(7, categorySelection);
+                    preparedStatement.setString(8, supplierSelection);
+                    preparedStatement.executeUpdate();
+
+                    PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM PRODUCT");
+                    ResultSet resultSet = selectStatement.executeQuery();
+                    productTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+                    productIDTxtField.setText("");
+                    expirationDateTxtField.setText("");
+                    productNameTxtField.setText("");
+                    productSerialNoTxtField.setText("");
+                    priceTxtField.setText("");
+                    productDescriptionTxtField.setText("");
+                    categoryNameComboBox.setVisible(true);
+                    supplierIdComboBox.setVisible(true);
+
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+        updateProductButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        deleteProductButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+
+        setVisible(true);
     }
 
     public static void main(String[] args) throws SQLException {

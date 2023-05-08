@@ -509,7 +509,7 @@
                     <properties>
                       <font name="Microsoft Sans Serif" size="18" style="1"/>
                       <foreground color="-16777216"/>
-                      <text value="Category Name"/>
+                      <text value="Category ID"/>
                     </properties>
                   </component>
                   <component id="2f0c4" class="javax.swing.JLabel">
@@ -552,14 +552,9 @@
                       <grid row="17" column="5" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                     </constraints>
                   </vspacer>
-                  <hspacer id="246ce">
+                  <hspacer id="b5370">
                     <constraints>
-                      <grid row="14" column="8" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                  </hspacer>
-                  <hspacer id="1fb4e">
-                    <constraints>
-                      <grid row="16" column="7" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="20" column="7" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                   </hspacer>
                 </children>
