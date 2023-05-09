@@ -41,6 +41,7 @@ public class ProductsLocationPage extends JDialog {
         ResultSet resultSet = selectStatement.executeQuery();
         productLocationTable.setModel(DbUtils.resultSetToTableModel(resultSet));
 
+        //Go Home
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -50,6 +51,7 @@ public class ProductsLocationPage extends JDialog {
         });
 
 
+        //Go to Categories
         categoriesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,6 +64,8 @@ public class ProductsLocationPage extends JDialog {
             }
         });
 
+
+        //Go to Product Location
         productLocationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -74,6 +78,7 @@ public class ProductsLocationPage extends JDialog {
             }
         });
 
+        //Go to Suppliers
         suppliersButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -87,6 +92,7 @@ public class ProductsLocationPage extends JDialog {
         });
 
 
+        //Go to Shipments
         shipmentsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -96,6 +102,7 @@ public class ProductsLocationPage extends JDialog {
         });
 
 
+        //Go to Inventory
         inventoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -105,6 +112,7 @@ public class ProductsLocationPage extends JDialog {
         });
 
 
+        //Go to Account
         accountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -113,6 +121,7 @@ public class ProductsLocationPage extends JDialog {
             }
         });
 
+        //Go to Products
         productButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -125,7 +134,7 @@ public class ProductsLocationPage extends JDialog {
             }
         });
 
-
+        //Add Product Location
         addProductLocation.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -161,6 +170,7 @@ public class ProductsLocationPage extends JDialog {
             }
         });
 
+        //Update Product Location
         updateProductLocationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -192,6 +202,8 @@ public class ProductsLocationPage extends JDialog {
 
             }
         });
+
+        //Delete Product Location
         deleteProductLocationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

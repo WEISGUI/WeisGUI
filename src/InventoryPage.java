@@ -40,6 +40,7 @@ public class InventoryPage extends JDialog {
         setModal(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        //Go home
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -49,6 +50,7 @@ public class InventoryPage extends JDialog {
         });
 
 
+        //Go to Categories
         categoriesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -61,6 +63,7 @@ public class InventoryPage extends JDialog {
             }
         });
 
+        //Go to Product Location
         productLocationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -73,6 +76,7 @@ public class InventoryPage extends JDialog {
             }
         });
 
+        //Go to Suppliers
         suppliersButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,6 +90,7 @@ public class InventoryPage extends JDialog {
         });
 
 
+        //Go to Shipments
         shipmentsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -95,6 +100,7 @@ public class InventoryPage extends JDialog {
         });
 
 
+        //Go to Inventory
         inventoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -104,7 +110,7 @@ public class InventoryPage extends JDialog {
             }
         });
 
-
+        //Go to Account
         accountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -113,7 +119,7 @@ public class InventoryPage extends JDialog {
             }
         });
 
-
+        //Go to Product
         productButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

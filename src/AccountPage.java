@@ -39,7 +39,7 @@ public class AccountPage extends JDialog{
         employeeEmail.setText(weisEmployee.getEmployeeEmailAddress());
         employeePassword.setText(weisEmployee.getEmployeePassword());
 
-
+        //Go to Home
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -48,7 +48,7 @@ public class AccountPage extends JDialog{
             }
         });
 
-
+        //Go to Categories
         categoriesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -63,6 +63,7 @@ public class AccountPage extends JDialog{
             }
         });
 
+        //Go to Products Location
         productLocationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -76,6 +77,7 @@ public class AccountPage extends JDialog{
             }
         });
 
+        //Go to Suppliers
         suppliersButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -89,7 +91,7 @@ public class AccountPage extends JDialog{
             }
         });
 
-
+        //Go to Shipments
         shipmentsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -100,6 +102,7 @@ public class AccountPage extends JDialog{
         });
 
 
+        //Go to Inventory
         inventoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -109,6 +112,7 @@ public class AccountPage extends JDialog{
         });
 
 
+        //Go to Account
         accountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -117,7 +121,7 @@ public class AccountPage extends JDialog{
             }
         });
 
-
+        //Completely Log Out and Close Application
         logOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -125,6 +129,7 @@ public class AccountPage extends JDialog{
             }
         });
 
+        //Switch Accounts
         switchAccountsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -133,6 +138,7 @@ public class AccountPage extends JDialog{
             }
         });
 
+        //Go to Product
         productButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

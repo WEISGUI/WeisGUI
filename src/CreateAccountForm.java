@@ -31,6 +31,7 @@ public class CreateAccountForm extends JDialog
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        //Create Account
         CreateAccountButton.addActionListener(new ActionListener()
         {
             @Override
@@ -143,6 +144,7 @@ public class CreateAccountForm extends JDialog
             }
         });
 
+        //Go to Login Page
         GoToLoginPageButton.addActionListener(new ActionListener()
         {
             @Override
@@ -158,6 +160,7 @@ public class CreateAccountForm extends JDialog
 
     public Employee weisNewEmployee;
 
+    //Create Account
     private Employee createNewWeisEmployee(String Employee_id, String EmployeeFName, String EmployeeMName, String EmployeeLName, String EmployeeEmailAddress, String EmployeeAddress, String EmployeePhoneNumber, String EmployeeSSN, String EmployeePassword)
     {
         Employee newWeisEmployee = null;
@@ -250,9 +253,6 @@ public class CreateAccountForm extends JDialog
             {
                 e.printStackTrace();
             }
-
-
-
 
 
             if (employeeTableRows > 0)

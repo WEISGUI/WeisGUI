@@ -45,6 +45,7 @@ public class SuppliersPage extends JDialog {
         supplierTable.setModel(DbUtils.resultSetToTableModel(resultSet));
 
 
+        //Go Home
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -54,6 +55,7 @@ public class SuppliersPage extends JDialog {
         });
 
 
+        //Go to Categories
         categoriesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -66,6 +68,7 @@ public class SuppliersPage extends JDialog {
             }
         });
 
+        //Go to Products Location
         productLocationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -78,6 +81,7 @@ public class SuppliersPage extends JDialog {
             }
         });
 
+        //Go to Suppliers
         suppliersButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -90,7 +94,7 @@ public class SuppliersPage extends JDialog {
             }
         });
 
-
+        //Go to Shipments
         shipmentsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -100,6 +104,7 @@ public class SuppliersPage extends JDialog {
         });
 
 
+        //Go to Inventory
         inventoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -108,7 +113,7 @@ public class SuppliersPage extends JDialog {
             }
         });
 
-
+        //Go to Accounts
         accountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -117,6 +122,7 @@ public class SuppliersPage extends JDialog {
             }
         });
 
+        //Go to Products
         productButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -129,6 +135,7 @@ public class SuppliersPage extends JDialog {
             }
         });
 
+        //Add Supplier
         addSupplierButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -170,6 +177,8 @@ public class SuppliersPage extends JDialog {
 
             }
         });
+
+        //Update Supplier
         updateSupplierButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -210,6 +219,8 @@ public class SuppliersPage extends JDialog {
 
             }
         });
+
+        //Delete Supplier
         deleteSupplierButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

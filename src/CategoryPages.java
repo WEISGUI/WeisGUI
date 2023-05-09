@@ -42,6 +42,8 @@ public class CategoryPages extends JDialog {
         PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM CATEGORY");
         ResultSet resultSet = selectStatement.executeQuery();
         categoryTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+        //Go Home
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -49,6 +51,8 @@ public class CategoryPages extends JDialog {
                 HomePage homePage = new HomePage(null);
             }
         });
+
+        //Go to Category
         categoriesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -56,6 +60,8 @@ public class CategoryPages extends JDialog {
                 CategoryPage categoryPage = new CategoryPage(null);
             }
         });
+
+        //Go to Products Location
         productLocationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,6 +73,8 @@ public class CategoryPages extends JDialog {
                 }
             }
         });
+
+        //Go to Suppliers
         suppliersButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -78,6 +86,8 @@ public class CategoryPages extends JDialog {
                 }
             }
         });
+
+        //Go to Shipments
         shipmentsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -85,6 +95,8 @@ public class CategoryPages extends JDialog {
                 ShipmentsPage shipmentsPage = new ShipmentsPage(null);
             }
         });
+
+        //Go to Inventory
         inventoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -92,6 +104,8 @@ public class CategoryPages extends JDialog {
                 InventoryPage inventoryPage = new InventoryPage(null);
             }
         });
+
+        //Go to Account
         accountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -100,7 +114,7 @@ public class CategoryPages extends JDialog {
             }
         });
 
-        //Add Catgegory
+        //Add Category
         addCategoryButton.addActionListener(new ActionListener()
         {
             @Override
@@ -138,6 +152,7 @@ public class CategoryPages extends JDialog {
             }
         });
 
+        //Go to Products
         productButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
