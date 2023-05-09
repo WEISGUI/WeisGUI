@@ -1,5 +1,4 @@
 import net.proteanit.sql.DbUtils;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -30,6 +29,8 @@ public class ProductsPage extends JDialog{
     private JTextField productDescriptionTxtField;
     private JComboBox categoryNameComboBox;
     private JComboBox supplierIdComboBox;
+    private JTextField categorySelectionTxtField;
+    private JTextField supplierIDtxtField;
 
     private Employee weisEmployee;
 
@@ -61,7 +62,7 @@ public class ProductsPage extends JDialog{
 
             while(resultSet1.next())
             {
-                supplierIdComboBox.addItem(resultSet1.getString("Supplier_id"));
+                supplierIdComboBox.addItem(resultSet1.getString("Supplier_name"));
                 supplierIdComboBox.setVisible(true);
             }
 
@@ -80,7 +81,7 @@ public class ProductsPage extends JDialog{
             ResultSet resultSet2 = preparedStatement.executeQuery();
 
             while (resultSet2.next()) {
-                categoryNameComboBox.addItem(resultSet2.getString("Category_id"));
+                categoryNameComboBox.addItem(resultSet2.getString("Category_name"));
                 categoryNameComboBox.setVisible(true);
             }
         } catch (SQLException ex){
@@ -182,15 +183,31 @@ public class ProductsPage extends JDialog{
                 String Product_serial = productSerialNoTxtField.getText();
                 String Price = priceTxtField.getText();
                 String Product_description = productDescriptionTxtField.getText();
-                String categorySelection = categoryNameComboBox.getSelectedItem().toString();
-                String supplierSelection = supplierIdComboBox.getSelectedItem().toString();
+                String selectedCategory = categoryNameComboBox.getSelectedItem().toString();
+                String selectedSupplier = supplierIdComboBox.getSelectedItem().toString();
+
+                //Get Category Selection
+                categoryNameComboBox.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        categorySelectionTxtField.setText(selectedCategory);
+                    }
+                });
+
+                //Get Supplier Selection
+                supplierIDtxtField.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        supplierIDtxtField.setText(selectedSupplier);
+                    }
+                });
 
 
                 try {
 
                     Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
 
-                    String sql = "INSERT INTO PRODUCT (Product_id, Exp_date, Product_name, Product_serial, Price, Product_description, Category_name, Supplier_id)"
+                    String sql = "INSERT INTO PRODUCT (Product_id, Exp_date, Product_name, Product_serial, Price, Product_description, Category_name, Supplier_name)"
                             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
                     PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -200,8 +217,8 @@ public class ProductsPage extends JDialog{
                     preparedStatement.setString(4, Product_serial);
                     preparedStatement.setString(5, Price);
                     preparedStatement.setString(6, Product_description);
-                    preparedStatement.setString(7, categorySelection);
-                    preparedStatement.setString(8, supplierSelection);
+                    preparedStatement.setString(7, selectedCategory);
+                    preparedStatement.setString(8, selectedSupplier);
                     preparedStatement.executeUpdate();
 
                     PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM PRODUCT");
@@ -214,6 +231,9 @@ public class ProductsPage extends JDialog{
                     productSerialNoTxtField.setText("");
                     priceTxtField.setText("");
                     productDescriptionTxtField.setText("");
+                    categorySelectionTxtField.setText("");
+                    supplierIDtxtField.setText("");
+
                     categoryNameComboBox.setVisible(true);
                     supplierIdComboBox.setVisible(true);
 
@@ -234,7 +254,6 @@ public class ProductsPage extends JDialog{
 
             }
         });
-
 
         setVisible(true);
     }
