@@ -82,6 +82,8 @@ public class CreateAccountForm extends JDialog
                             "Error: Email field is empty, please enter an email",
                             "Empty Create Account Email",
                             JOptionPane.ERROR_MESSAGE);
+
+
                 }
                 else if(!EmployeeEmailAddress.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"))
                 {

@@ -89,6 +89,7 @@ public class ProductsPage extends JDialog{
         }
 
 
+        //Go Home
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -97,7 +98,7 @@ public class ProductsPage extends JDialog{
             }
         });
 
-
+        //Go to Categories
         categoriesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -110,6 +111,7 @@ public class ProductsPage extends JDialog{
             }
         });
 
+        //Go to Product Location
         productLocationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -122,6 +124,7 @@ public class ProductsPage extends JDialog{
             }
         });
 
+        //Go to Supplier
         suppliersButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -135,6 +138,7 @@ public class ProductsPage extends JDialog{
         });
 
 
+        //Go to Shipment
         shipmentsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -144,6 +148,7 @@ public class ProductsPage extends JDialog{
         });
 
 
+        //Go to Inventory
         inventoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -153,6 +158,7 @@ public class ProductsPage extends JDialog{
         });
 
 
+        //Go to Account
         accountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -162,6 +168,7 @@ public class ProductsPage extends JDialog{
         });
 
 
+        //Go to Product Page
         productButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -174,6 +181,7 @@ public class ProductsPage extends JDialog{
             }
         });
 
+        //Add Products
         addProductButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -242,16 +250,135 @@ public class ProductsPage extends JDialog{
                 }
             }
         });
+
+        //Update Products
         updateProductButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String Product_id = productIDTxtField.getText();
+                String Exp_date = expirationDateTxtField.getText();
+                String Product_name = productNameTxtField.getText();
+                String Product_serial = productSerialNoTxtField.getText();
+                String Price = priceTxtField.getText();
+                String Product_description = productDescriptionTxtField.getText();
+                String selectedCategory = categoryNameComboBox.getSelectedItem().toString();
+                String selectedSupplier = supplierIdComboBox.getSelectedItem().toString();
+
+                //Get Category Selection
+                categoryNameComboBox.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        categorySelectionTxtField.setText(selectedCategory);
+                    }
+                });
+
+                //Get Supplier Selection
+                supplierIDtxtField.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        supplierIDtxtField.setText(selectedSupplier);
+                    }
+                });
+
+                try {
+                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+                    PreparedStatement preparedStatement = connection.prepareStatement("UPDATE PRODUCT SET Exp_date = ?, Product_name = ?, Product_serial = ?, Price = ?, Product_description = ?, Category_name = ?, Supplier_name = ? WHERE Product_id = ?");
+
+                    preparedStatement.setString(1, Exp_date);
+                    preparedStatement.setString(2, Product_name);
+                    preparedStatement.setString(3, Product_serial);
+                    preparedStatement.setString(4, Price);
+                    preparedStatement.setString(5, Product_description);
+                    preparedStatement.setString(6, selectedCategory);
+                    preparedStatement.setString(7, selectedSupplier);
+                    preparedStatement.setString(8, Product_id);
+                    preparedStatement.executeUpdate();
+
+                    PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM PRODUCT");
+                    ResultSet resultSet = selectStatement.executeQuery();
+                    productTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+                    productIDTxtField.setText("");
+                    expirationDateTxtField.setText("");
+                    productNameTxtField.setText("");
+                    productSerialNoTxtField.setText("");
+                    priceTxtField.setText("");
+                    productDescriptionTxtField.setText("");
+                    categorySelectionTxtField.setText("");
+                    supplierIDtxtField.setText("");
+
+                    categoryNameComboBox.setVisible(true);
+                    supplierIdComboBox.setVisible(true);
+
+                }
+                catch (SQLException e1)
+                {
+                    e1.printStackTrace();
+                }
+
 
             }
         });
+
+        //Delete Products
         deleteProductButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                String Product_id = productIDTxtField.getText();
+                String Exp_date = expirationDateTxtField.getText();
+                String Product_name = productNameTxtField.getText();
+                String Product_serial = productSerialNoTxtField.getText();
+                String Price = priceTxtField.getText();
+                String Product_description = productDescriptionTxtField.getText();
+                String selectedCategory = categoryNameComboBox.getSelectedItem().toString();
+                String selectedSupplier = supplierIdComboBox.getSelectedItem().toString();
+
+                //Get Category Selection
+                categoryNameComboBox.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        categorySelectionTxtField.setText(selectedCategory);
+                    }
+                });
+
+                //Get Supplier Selection
+                supplierIDtxtField.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        supplierIDtxtField.setText(selectedSupplier);
+                    }
+                });
+
+
+                try{
+                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+                    PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM PRODUCT WHERE Product_id = ?");
+
+                    preparedStatement.setString(1, Product_id);
+
+                    preparedStatement.executeUpdate();
+
+                    PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM PRODUCT");
+                    ResultSet resultSet = selectStatement.executeQuery();
+                    productTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+                    productIDTxtField.setText("");
+                    expirationDateTxtField.setText("");
+                    productNameTxtField.setText("");
+                    productSerialNoTxtField.setText("");
+                    priceTxtField.setText("");
+                    productDescriptionTxtField.setText("");
+                    categorySelectionTxtField.setText("");
+                    supplierIDtxtField.setText("");
+
+                    categoryNameComboBox.setVisible(true);
+                    supplierIdComboBox.setVisible(true);
+                }
+                catch (SQLException e1)
+                {
+                    e1.printStackTrace();
+                }
             }
         });
 
