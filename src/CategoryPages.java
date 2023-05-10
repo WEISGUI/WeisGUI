@@ -239,26 +239,59 @@ public class CategoryPages extends JDialog {
                 String Category_name = categoryNameTxtField.getText();
                 String Category_description = categoryDescriptionTxtField.getText();
 
+                //Boolean Variable to check if duplicate Category Name is found
+                boolean CheckCategoryName = false;
+
+                //Check if Category Name Exists
                 try {
                     Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
-                    PreparedStatement preparedStatement = connection.prepareStatement("UPDATE CATEGORY SET Category_name = ?, Category_description = ? WHERE Category_id = ?");
-
+                    String sql = "SELECT * FROM CATEGORY WHERE Category_name = ?";
+                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
                     preparedStatement.setString(1, Category_name);
-                    preparedStatement.setString(2, Category_description);
-                    preparedStatement.setString(3, Category_id);
-                    preparedStatement.executeUpdate();
 
-                    PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM CATEGORY");
-                    ResultSet resultSet = selectStatement.executeQuery();
-                    categoryTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+                    ResultSet resultSet = preparedStatement.executeQuery();
 
-                    categoryIDTxtField.setText("");
-                    categoryNameTxtField.setText("");
-                    categoryDescriptionTxtField.setText("");
+                    //While there is an entry in the CATEGORY Table check if the Category_name is the same the entered in Category_name
+                    while (resultSet.next()) {
+                        if (resultSet.getString("Category_name").equals(Category_name)) {
+                            CheckCategoryName = true;
+                        }
+                    }
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
                 }
-                catch (SQLException e1)
+
+                //Check if the Category_name is the same
+                if (CheckCategoryName) {
+                JOptionPane.showMessageDialog(CategoryPages.this,
+                        "Error: Category Name already exists, please choose another one",
+                        "Duplicate Category Name",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+                else
                 {
-                    e1.printStackTrace();
+                    try {
+                        Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+                        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE CATEGORY SET Category_name = ?, Category_description = ? WHERE Category_id = ?");
+
+                        preparedStatement.setString(1, Category_name);
+                        preparedStatement.setString(2, Category_description);
+                        preparedStatement.setString(3, Category_id);
+                        preparedStatement.executeUpdate();
+
+                        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM CATEGORY");
+                        ResultSet resultSet = selectStatement.executeQuery();
+                        categoryTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+                        categoryIDTxtField.setText("");
+                        categoryNameTxtField.setText("");
+                        categoryDescriptionTxtField.setText("");
+                    }
+                    catch (SQLException e1)
+                    {
+                        e1.printStackTrace();
+                    }
                 }
             }
         });
