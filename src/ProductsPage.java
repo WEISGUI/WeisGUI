@@ -215,6 +215,62 @@ public class ProductsPage extends JDialog{
                             "Duplicate Product ID",
                             JOptionPane.ERROR_MESSAGE);
                 }
+                else if(Product_id.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Product ID field is empty, please enter a Product ID",
+                            "Empty Product ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Product_description.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Product field is empty, please enter a Product Description",
+                            "Empty Product Description",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Product_name.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Product Name field is empty, please enter a Product Name",
+                            "Empty Product Name",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Exp_date.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Exp Date field is empty, please enter a Exp Date",
+                            "Empty Exp Date",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Price.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Price field is empty, please enter a Price",
+                            "Empty Price",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Product_serial.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Product Serial field is empty, please enter a Product Serial",
+                            "Empty Product Serial",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(selectedCategory.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Selected Category ComboBox is empty, please enter a Selected Category",
+                            "Empty Selected Category",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(selectedSupplier.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Selected Supplier field is empty, please enter a Selected Supplier",
+                            "Empty Selected Supplier",
+                            JOptionPane.ERROR_MESSAGE);
+                }
                 else if(CheckProductName)
                 {
                     JOptionPane.showMessageDialog(ProductsPage.this,
@@ -342,6 +398,62 @@ public class ProductsPage extends JDialog{
                             "Duplicate Product Name",
                             JOptionPane.ERROR_MESSAGE);
                 }
+                else if(Product_id.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Product ID field is empty, please enter a Product ID",
+                            "Empty Product ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Product_description.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Product field is empty, please enter a Product Description",
+                            "Empty Product Description",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Product_name.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Product Name field is empty, please enter a Product Name",
+                            "Empty Product Name",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Exp_date.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Exp Date field is empty, please enter a Exp Date",
+                            "Empty Exp Date",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Price.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Price field is empty, please enter a Price",
+                            "Empty Price",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Product_serial.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Product Serial field is empty, please enter a Product Serial",
+                            "Empty Product Serial",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(selectedCategory.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Selected Category ComboBox is empty, please enter a Selected Category",
+                            "Empty Selected Category",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(selectedSupplier.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Selected Supplier field is empty, please enter a Selected Supplier",
+                            "Empty Selected Supplier",
+                            JOptionPane.ERROR_MESSAGE);
+                }
                 else if(CheckProductSerial)
                 {
                     JOptionPane.showMessageDialog(ProductsPage.this,
@@ -418,34 +530,43 @@ public class ProductsPage extends JDialog{
                     }
                 });
 
-
-                try{
-                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
-                    PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM PRODUCT WHERE Product_id = ?");
-
-                    preparedStatement.setString(1, Product_id);
-
-                    preparedStatement.executeUpdate();
-
-                    PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM PRODUCT");
-                    ResultSet resultSet = selectStatement.executeQuery();
-                    productTable.setModel(DbUtils.resultSetToTableModel(resultSet));
-
-                    productIDTxtField.setText("");
-                    expirationDateTxtField.setText("");
-                    productNameTxtField.setText("");
-                    productSerialNoTxtField.setText("");
-                    priceTxtField.setText("");
-                    productDescriptionTxtField.setText("");
-                    categorySelectionTxtField.setText("");
-                    supplierIDtxtField.setText("");
-
-                    categoryNameComboBox.setVisible(true);
-                    supplierIdComboBox.setVisible(true);
-                }
-                catch (SQLException e1)
+                if(Product_id.isEmpty())
                 {
-                    e1.printStackTrace();
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Product ID is empty, please enter a Product ID to be deleted",
+                            "Empty Product ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                {
+                    try{
+                        Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+                        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM PRODUCT WHERE Product_id = ?");
+
+                        preparedStatement.setString(1, Product_id);
+
+                        preparedStatement.executeUpdate();
+
+                        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM PRODUCT");
+                        ResultSet resultSet = selectStatement.executeQuery();
+                        productTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+                        productIDTxtField.setText("");
+                        expirationDateTxtField.setText("");
+                        productNameTxtField.setText("");
+                        productSerialNoTxtField.setText("");
+                        priceTxtField.setText("");
+                        productDescriptionTxtField.setText("");
+                        categorySelectionTxtField.setText("");
+                        supplierIDtxtField.setText("");
+
+                        categoryNameComboBox.setVisible(true);
+                        supplierIdComboBox.setVisible(true);
+                    }
+                    catch (SQLException e1)
+                    {
+                        e1.printStackTrace();
+                    }
                 }
             }
         });

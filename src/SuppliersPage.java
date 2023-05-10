@@ -399,29 +399,46 @@ public class SuppliersPage extends JDialog {
                 String Supplier_id = supplierIDTxtField.getText();
                 String Supplier_name = supplierNameTxtField.getText();
 
-                try{
-                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
-                    PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM SUPPLIER WHERE Supplier_id = ? AND Supplier_name = ?");
-
-                    preparedStatement.setString(1, Supplier_id);
-                    preparedStatement.setString(2, Supplier_name);
-                    preparedStatement.executeUpdate();
-
-                    PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM SUPPLIER");
-                    ResultSet resultSet = selectStatement.executeQuery();
-                    supplierTable.setModel(DbUtils.resultSetToTableModel(resultSet));
-
-                    supplierIDTxtField.setText("");
-                    supplierNameTxtField.setText("");
-                    supplierAddressTxtField.setText("");
-                    supplierPhoneTxtField.setText("");
-                    supplierEmailTxtField.setText("");
-                }
-                catch (SQLException e1)
+                if(Supplier_id.isEmpty())
                 {
-                    e1.printStackTrace();
+                    JOptionPane.showMessageDialog(SuppliersPage.this,
+                            "Error: Supplier ID field is empty, please enter a Supplier ID to be deleted",
+                            "Empty Supplier ID",
+                            JOptionPane.ERROR_MESSAGE);
                 }
+                else if(Supplier_name.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(SuppliersPage.this,
+                            "Error: Supplier Name field is empty, please enter a Supplier Name to be deleted",
+                            "Empty Supplier Name",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                {
+                    try{
+                        Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+                        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM SUPPLIER WHERE Supplier_id = ? AND Supplier_name = ?");
 
+                        preparedStatement.setString(1, Supplier_id);
+                        preparedStatement.setString(2, Supplier_name);
+                        preparedStatement.executeUpdate();
+
+                        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM SUPPLIER");
+                        ResultSet resultSet = selectStatement.executeQuery();
+                        supplierTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+                        supplierIDTxtField.setText("");
+                        supplierNameTxtField.setText("");
+                        supplierAddressTxtField.setText("");
+                        supplierPhoneTxtField.setText("");
+                        supplierEmailTxtField.setText("");
+                    }
+                    catch (SQLException e1)
+                    {
+                        e1.printStackTrace();
+                    }
+
+                }
             }
         });
 
