@@ -43,6 +43,7 @@ public class CategoryPages extends JDialog {
         ResultSet resultSet = selectStatement.executeQuery();
         categoryTable.setModel(DbUtils.resultSetToTableModel(resultSet));
 
+
         //Go Home
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -127,31 +128,94 @@ public class CategoryPages extends JDialog {
                 String Category_name = categoryNameTxtField.getText();
                 String Category_description = categoryDescriptionTxtField.getText();
 
+
+                //Boolean variables used to check if CategoryID and CategoryName exists
+                boolean CheckCategoryID = false;
+                boolean CheckCategoryName = false;
+
+
+                //Check if Category ID Exists
                 try {
-
                     Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
-
-                    String sql = "INSERT INTO CATEGORY (Category_id, Category_name, Category_description)"
-                            + "VALUES (?, ?, ?)";
-
+                    String sql = "SELECT * FROM CATEGORY WHERE Category_id = ?";
                     PreparedStatement preparedStatement = connection.prepareStatement(sql);
                     preparedStatement.setString(1, Category_id);
-                    preparedStatement.setString(2, Category_name);
-                    preparedStatement.setString(3, Category_description);
-                    preparedStatement.executeUpdate();
 
+                    ResultSet resultSet = preparedStatement.executeQuery();
 
-                    PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM CATEGORY");
-                    ResultSet resultSet = selectStatement.executeQuery();
-                    categoryTable.setModel(DbUtils.resultSetToTableModel(resultSet));
-
-                    categoryIDTxtField.setText("");
-                    categoryNameTxtField.setText("");
-                    categoryDescriptionTxtField.setText("");
-
+                    //While there is an entry in the CATEGORY Table check if the Category_id is the same the entered in Category_id
+                    while (resultSet.next()) {
+                        if (resultSet.getString("Category_id").equals(Category_id)) {
+                            CheckCategoryID = true;
+                        }
+                    }
 
                 } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
+                    ex.printStackTrace();
+                }
+
+
+                //Check if Category Name Exists
+                try {
+                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+                    String sql = "SELECT * FROM CATEGORY WHERE Category_name = ?";
+                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                    preparedStatement.setString(1, Category_name);
+
+                    ResultSet resultSet = preparedStatement.executeQuery();
+
+                    //While there is an entry in the CATEGORY Table check if the Category_name is the same the entered in Category_name
+                    while (resultSet.next()) {
+                        if (resultSet.getString("Category_name").equals(Category_name)) {
+                            CheckCategoryName = true;
+                        }
+                    }
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                //Check if Category_Id is the same
+                if (CheckCategoryID) {
+                    JOptionPane.showMessageDialog(CategoryPages.this,
+                            "Error: Category ID already exists, please choose another one",
+                            "Duplicate Category ID",
+                            JOptionPane.ERROR_MESSAGE);
+
+                    //Check if the Category_name is the same
+                } else if (CheckCategoryName) {
+                    JOptionPane.showMessageDialog(CategoryPages.this,
+                            "Error: Category Name already exists, please choose another one",
+                            "Duplicate Category Name",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                //If Category_Id and Category_name are not found in the database, add the entry to the database and table
+                else {
+                    try {
+
+                        Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+
+                        String sql = "INSERT INTO CATEGORY (Category_id, Category_name, Category_description)"
+                                + "VALUES (?, ?, ?)";
+
+                        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                        preparedStatement.setString(1, Category_id);
+                        preparedStatement.setString(2, Category_name);
+                        preparedStatement.setString(3, Category_description);
+                        preparedStatement.executeUpdate();
+
+
+                        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM CATEGORY");
+                        ResultSet resultSet = selectStatement.executeQuery();
+                        categoryTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+                        categoryIDTxtField.setText("");
+                        categoryNameTxtField.setText("");
+                        categoryDescriptionTxtField.setText("");
+
+
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
         });
