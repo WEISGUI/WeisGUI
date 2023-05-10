@@ -190,13 +190,6 @@ public class ProductsLocationPage extends JDialog {
                             "Empty Shelf",
                             JOptionPane.ERROR_MESSAGE);
                 }
-                else if(!Shelf.matches("Top") || !Shelf.matches("Middle") || !Shelf.matches("Bottom"))
-                {
-                    JOptionPane.showMessageDialog(ProductsLocationPage.this,
-                            "Error: Shelf field does not contain either Top, Middle, or Bottom is empty, please enter in either Top, Middle, or Bottom",
-                            "Wrong Shelf Data",
-                            JOptionPane.ERROR_MESSAGE);
-                }
                 else
                 {
                     try {
@@ -257,13 +250,6 @@ public class ProductsLocationPage extends JDialog {
                             "Empty Shelf",
                             JOptionPane.ERROR_MESSAGE);
                 }
-                else if(!Shelf.matches("Top") || !Shelf.matches("Middle") || !Shelf.matches("Bottom"))
-                {
-                    JOptionPane.showMessageDialog(ProductsLocationPage.this,
-                            "Error: Shelf field does not contain either Top, Middle, or Bottom is empty, please enter in either Top, Middle, or Bottom",
-                            "Wrong Shelf Data",
-                            JOptionPane.ERROR_MESSAGE);
-                }
                 else {
                     try {
                         Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
@@ -293,46 +279,21 @@ public class ProductsLocationPage extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String Location_id = productLocationIDTxtField.getText();
-                String Aisle = productLocationAisleNumberTxtField.getText();
-                String Shelf = productLocationShelfTxtField.getText();
 
                 if(Location_id.isEmpty())
                 {
                     JOptionPane.showMessageDialog(ProductsLocationPage.this,
-                            "Error: Location ID field is empty, please enter a Locaiton ID",
+                            "Error: Location ID field is empty, please enter a Locaiton ID to be deleted",
                             "Empty Location ID",
-                            JOptionPane.ERROR_MESSAGE);
-                }
-                else if(Aisle.isEmpty())
-                {
-                    JOptionPane.showMessageDialog(ProductsLocationPage.this,
-                            "Error: Aisle field is empty, please enter a Aisle",
-                            "Empty Aisle",
-                            JOptionPane.ERROR_MESSAGE);
-                }
-                else if(Shelf.isEmpty())
-                {
-                    JOptionPane.showMessageDialog(ProductsLocationPage.this,
-                            "Error: Shelf field is empty, please enter a Shelf",
-                            "Empty Shelf",
-                            JOptionPane.ERROR_MESSAGE);
-                }
-                else if(!Shelf.matches("Top") || !Shelf.matches("Middle") || !Shelf.matches("Bottom"))
-                {
-                    JOptionPane.showMessageDialog(ProductsLocationPage.this,
-                            "Error: Shelf field does not contain either Top, Middle, or Bottom is empty, please enter in either Top, Middle, or Bottom",
-                            "Wrong Shelf Data",
                             JOptionPane.ERROR_MESSAGE);
                 }
                 else {
 
                     try {
                         Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
-                        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM LOCATION WHERE Location_id = ? AND Aisle = ? AND Shelf = ?");
+                        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM LOCATION WHERE Location_id = ?");
 
                         preparedStatement.setString(1, Location_id);
-                        preparedStatement.setString(2, Aisle);
-                        preparedStatement.setString(3, Shelf);
                         preparedStatement.executeUpdate();
 
                         PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM LOCATION");
@@ -346,7 +307,6 @@ public class ProductsLocationPage extends JDialog {
                         e1.printStackTrace();
                     }
                 }
-
             }
         });
 

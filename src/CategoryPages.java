@@ -180,12 +180,32 @@ public class CategoryPages extends JDialog {
                             "Error: Category ID already exists, please choose another one",
                             "Duplicate Category ID",
                             JOptionPane.ERROR_MESSAGE);
-
                     //Check if the Category_name is the same
                 } else if (CheckCategoryName) {
                     JOptionPane.showMessageDialog(CategoryPages.this,
                             "Error: Category Name already exists, please choose another one",
                             "Duplicate Category Name",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Category_id.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(CategoryPages.this,
+                            "Error: Category ID field is empty, please enter a Category ID",
+                            "Empty Category ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Category_description.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(CategoryPages.this,
+                            "Error: Category Description field is empty, please enter a category description",
+                            "Empty Category Description",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Category_name.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(CategoryPages.this,
+                            "Error: Category Name field is empty, please enter a Category Name",
+                            "Empty Category Name",
                             JOptionPane.ERROR_MESSAGE);
                 }
                 //If Category_Id and Category_name are not found in the database, add the entry to the database and table
