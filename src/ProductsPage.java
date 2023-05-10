@@ -34,7 +34,7 @@ public class ProductsPage extends JDialog{
 
     private Employee weisEmployee;
 
-    public ProductsPage(Employee weisEmployee) throws SQLException
+    public ProductsPage(Employee weisEmployee)
     {
         this.weisEmployee = weisEmployee;
         setTitle("Weis Markets - Products Page");
@@ -43,58 +43,19 @@ public class ProductsPage extends JDialog{
         setModal(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        //Populate Products Table
-        Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
-        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM PRODUCT");
-        ResultSet resultSet = selectStatement.executeQuery();
-        productTable.setModel(DbUtils.resultSetToTableModel(resultSet));
-
-
-        //Populate Supplier ComboBox
-        String supplierID = null;
+        //Establish Connection and Populate the Form
         try {
-
-            connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
-
-            String sql = "SELECT * FROM SUPPLIER";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            ResultSet resultSet1 = preparedStatement.executeQuery();
-
-            while(resultSet1.next())
-            {
-                supplierIdComboBox.addItem(resultSet1.getString("Supplier_name"));
-                supplierIdComboBox.setVisible(true);
-            }
-
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            createConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-
-
-        //Populate Category ComboBox
-        String categoryID = null;
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
-
-            String sql = "SELECT * FROM CATEGORY";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            ResultSet resultSet2 = preparedStatement.executeQuery();
-
-            while (resultSet2.next()) {
-                categoryNameComboBox.addItem(resultSet2.getString("Category_name"));
-                categoryNameComboBox.setVisible(true);
-            }
-        } catch (SQLException ex){
-            throw new RuntimeException(ex);
-        }
-
 
         //Go Home
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                HomePage homePage = new HomePage(null);
+                HomePage homePage = new HomePage(weisEmployee);
             }
         });
 
@@ -104,7 +65,7 @@ public class ProductsPage extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 try {
-                    CategoryPages categoryPages = new CategoryPages(null);
+                    CategoryPages categoryPages = new CategoryPages(weisEmployee);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -117,7 +78,7 @@ public class ProductsPage extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 try {
-                    ProductsLocationPage productsLocationPage = new ProductsLocationPage(null);
+                    ProductsLocationPage productsLocationPage = new ProductsLocationPage(weisEmployee);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -130,7 +91,7 @@ public class ProductsPage extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 try {
-                    SuppliersPage suppliersPage = new SuppliersPage(null);
+                    SuppliersPage suppliersPage = new SuppliersPage(weisEmployee);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -143,7 +104,7 @@ public class ProductsPage extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                ShipmentsPage shipmentsPage = new ShipmentsPage(null);
+                ShipmentsPage shipmentsPage = new ShipmentsPage(weisEmployee);
             }
         });
 
@@ -153,7 +114,7 @@ public class ProductsPage extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                InventoryPage inventoryPage = new InventoryPage(null);
+                InventoryPage inventoryPage = new InventoryPage(weisEmployee);
             }
         });
 
@@ -173,11 +134,7 @@ public class ProductsPage extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                try {
-                    ProductsPage productsPage = new ProductsPage(null);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+                ProductsPage productsPage = new ProductsPage(weisEmployee);
             }
         });
 
@@ -383,6 +340,54 @@ public class ProductsPage extends JDialog{
         });
 
         setVisible(true);
+    }
+
+    public void createConnection() throws SQLException
+    {
+        //Populate Products Table
+        Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM PRODUCT");
+        ResultSet resultSet = selectStatement.executeQuery();
+        productTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+
+        //Populate Supplier ComboBox
+        String supplierID = null;
+        try {
+
+            connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+
+            String sql = "SELECT * FROM SUPPLIER";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet1 = preparedStatement.executeQuery();
+
+            while(resultSet1.next())
+            {
+                supplierIdComboBox.addItem(resultSet1.getString("Supplier_name"));
+                supplierIdComboBox.setVisible(true);
+            }
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+
+
+        //Populate Category ComboBox
+        String categoryID = null;
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+
+            String sql = "SELECT * FROM CATEGORY";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet2 = preparedStatement.executeQuery();
+
+            while (resultSet2.next()) {
+                categoryNameComboBox.addItem(resultSet2.getString("Category_name"));
+                categoryNameComboBox.setVisible(true);
+            }
+        } catch (SQLException ex){
+            throw new RuntimeException(ex);
+        }
     }
 
     public static void main(String[] args) throws SQLException {

@@ -55,7 +55,7 @@ public class AccountPage extends JDialog{
                 dispose();
 
                 try {
-                    CategoryPages categoryPages = new CategoryPages(null);
+                    CategoryPages categoryPages = new CategoryPages(weisEmployee);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -69,7 +69,7 @@ public class AccountPage extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 try {
-                    ProductsLocationPage productLocationPage = new ProductsLocationPage(null);
+                    ProductsLocationPage productLocationPage = new ProductsLocationPage(weisEmployee);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -83,7 +83,7 @@ public class AccountPage extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 try {
-                    SuppliersPage suppliersPage = new SuppliersPage(null);
+                    SuppliersPage suppliersPage = new SuppliersPage(weisEmployee);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -96,7 +96,7 @@ public class AccountPage extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                ShipmentsPage shipmentsPage = new ShipmentsPage(null);
+                ShipmentsPage shipmentsPage = new ShipmentsPage(weisEmployee);
                 //ShipmentPage shipmentPage = new ShipmentPage(weisEmployee);
             }
         });
@@ -107,7 +107,7 @@ public class AccountPage extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                InventoryPage inventoryPage = new InventoryPage(null);
+                InventoryPage inventoryPage = new InventoryPage(weisEmployee);
             }
         });
 
@@ -143,11 +143,7 @@ public class AccountPage extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                try {
-                    ProductsPage productsPage = new ProductsPage(null);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+                ProductsPage productsPage = new ProductsPage(weisEmployee);
             }
         });
 
