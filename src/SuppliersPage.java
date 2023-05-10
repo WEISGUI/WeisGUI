@@ -141,36 +141,85 @@ public class SuppliersPage extends JDialog {
                 String Supplier_phone = supplierPhoneTxtField.getText();
                 String Supplier_email = supplierEmailTxtField.getText();
 
+
+                //Boolean Variables to check for duplicate SupplierID, Supplier Name
+                Boolean CheckSupplierID = false;
+                Boolean CheckSupplierName = false;
+
+                //Check if SupplierID and SupplierName exists
                 try {
-
                     Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
-
-                    String sql = "INSERT INTO SUPPLIER (Supplier_id, Supplier_name, Supplier_address, Supplier_phone, Supplier_email)"
-                            + "VALUES (?, ?, ?, ?, ?)";
-
+                    String sql = "SELECT * FROM SUPPLIER WHERE Supplier_id = ? OR Supplier_name = ?";
                     PreparedStatement preparedStatement = connection.prepareStatement(sql);
                     preparedStatement.setString(1, Supplier_id);
                     preparedStatement.setString(2, Supplier_name);
-                    preparedStatement.setString(3, Supplier_address);
-                    preparedStatement.setString(4, Supplier_phone);
-                    preparedStatement.setString(5, Supplier_email);
 
-                    preparedStatement.executeUpdate();
+                    ResultSet resultSet = preparedStatement.executeQuery();
 
-                    PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM SUPPLIER");
-                    ResultSet resultSet = selectStatement.executeQuery();
-                    supplierTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+                    //While there is an entry in the SUPPLIER Table check if the Supplier_id, Supplier_name is the same as the entered in Supplier_id, Supplier_name
+                    while (resultSet.next()) {
+                        if (resultSet.getString("Supplier_id").equals(Supplier_id)) {
+                            CheckSupplierID = true;
+                        }
 
-                    supplierIDTxtField.setText("");
-                    supplierNameTxtField.setText("");
-                    supplierAddressTxtField.setText("");
-                    supplierPhoneTxtField.setText("");
-                    supplierEmailTxtField.setText("");
+                        if(resultSet.getString("Supplier_name").equals(Supplier_name))
+                        {
+                            CheckSupplierName = true;
+                        }
+                    }
 
                 } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
+                    ex.printStackTrace();
                 }
 
+
+                //Check if duplicate supplierID or supplierName exists if it does prompt user with error otherwise add new supplier
+                if(CheckSupplierID)
+                {
+                    JOptionPane.showMessageDialog(SuppliersPage.this,
+                            "Error: Supplier ID already exists, please choose another one",
+                            "Duplicate Supplier ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(CheckSupplierName)
+                {
+                    JOptionPane.showMessageDialog(SuppliersPage.this,
+                            "Error: Supplier Name already exists, please choose another one",
+                            "Duplicate Supplier Name",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                {
+                    try {
+
+                        Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+
+                        String sql = "INSERT INTO SUPPLIER (Supplier_id, Supplier_name, Supplier_address, Supplier_phone, Supplier_email)"
+                                + "VALUES (?, ?, ?, ?, ?)";
+
+                        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                        preparedStatement.setString(1, Supplier_id);
+                        preparedStatement.setString(2, Supplier_name);
+                        preparedStatement.setString(3, Supplier_address);
+                        preparedStatement.setString(4, Supplier_phone);
+                        preparedStatement.setString(5, Supplier_email);
+
+                        preparedStatement.executeUpdate();
+
+                        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM SUPPLIER");
+                        ResultSet resultSet = selectStatement.executeQuery();
+                        supplierTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+                        supplierIDTxtField.setText("");
+                        supplierNameTxtField.setText("");
+                        supplierAddressTxtField.setText("");
+                        supplierPhoneTxtField.setText("");
+                        supplierEmailTxtField.setText("");
+
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
             }
         });
 
@@ -185,34 +234,63 @@ public class SuppliersPage extends JDialog {
                 String Supplier_phone = supplierPhoneTxtField.getText();
                 String Supplier_email = supplierEmailTxtField.getText();
 
+                //Boolean Variables to check for duplicate Supplier Name
+                Boolean CheckSupplierName = false;
+
+                //Check if SupplierName exists
                 try {
                     Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
-                    PreparedStatement preparedStatement = connection.prepareStatement("UPDATE SUPPLIER SET Supplier_name = ?, Supplier_address = ?, Supplier_phone = ?, Supplier_email = ? WHERE Supplier_id = ?");
-
-
+                    String sql = "SELECT * FROM SUPPLIER WHERE Supplier_name = ?";
+                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
                     preparedStatement.setString(1, Supplier_name);
-                    preparedStatement.setString(2, Supplier_address);
-                    preparedStatement.setString(3, Supplier_phone);
-                    preparedStatement.setString(4, Supplier_email);
-                    preparedStatement.setString(5, Supplier_id);
-                    preparedStatement.executeUpdate();
 
-                    PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM SUPPLIER");
-                    ResultSet resultSet = selectStatement.executeQuery();
-                    supplierTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+                    ResultSet resultSet = preparedStatement.executeQuery();
 
-                    supplierIDTxtField.setText("");
-                    supplierNameTxtField.setText("");
-                    supplierAddressTxtField.setText("");
-                    supplierPhoneTxtField.setText("");
-                    supplierEmailTxtField.setText("");
+                    //While there is an entry in the SUPPLIER Table check if the Supplier_name is the same as the entered in Supplier_name
+                    while (resultSet.next()) {
+                        if(resultSet.getString("Supplier_name").equals(Supplier_name))
+                        {
+                            CheckSupplierName = true;
+                        }
+                    }
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
                 }
-                catch (SQLException e1)
+
+                //Check if duplicate supplierName exists if it does prompt user with error otherwise update supplier
+                if(CheckSupplierName)
                 {
-                    e1.printStackTrace();
+                    JOptionPane.showMessageDialog(SuppliersPage.this,
+                            "Error: Supplier Name already exists, please choose another one",
+                            "Duplicate Supplier Name",
+                            JOptionPane.ERROR_MESSAGE);
                 }
+                else {
+                    try {
+                        Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+                        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE SUPPLIER SET Supplier_name = ?, Supplier_address = ?, Supplier_phone = ?, Supplier_email = ? WHERE Supplier_id = ?");
 
 
+                        preparedStatement.setString(1, Supplier_name);
+                        preparedStatement.setString(2, Supplier_address);
+                        preparedStatement.setString(3, Supplier_phone);
+                        preparedStatement.setString(4, Supplier_email);
+                        preparedStatement.setString(5, Supplier_id);
+                        preparedStatement.executeUpdate();
+
+                        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM SUPPLIER");
+                        ResultSet resultSet = selectStatement.executeQuery();
+                        supplierTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+                        supplierIDTxtField.setText("");
+                        supplierNameTxtField.setText("");
+                        supplierAddressTxtField.setText("");
+                        supplierPhoneTxtField.setText("");
+                        supplierEmailTxtField.setText("");
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
+                }
             }
         });
 
