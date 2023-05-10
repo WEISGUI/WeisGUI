@@ -230,7 +230,6 @@ public class CategoryPages extends JDialog {
         });
 
         //Update Category
-
         updateCategoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -269,6 +268,27 @@ public class CategoryPages extends JDialog {
                         "Duplicate Category Name",
                         JOptionPane.ERROR_MESSAGE);
                 }
+                else if(Category_id.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(CategoryPages.this,
+                            "Error: Category ID field is empty, please enter a Category ID",
+                            "Empty Category ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Category_description.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(CategoryPages.this,
+                            "Error: Category Description field is empty, please enter a category description",
+                            "Empty Category Description",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Category_name.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(CategoryPages.this,
+                            "Error: Category Name field is empty, please enter a Category Name",
+                            "Empty Category Name",
+                            JOptionPane.ERROR_MESSAGE);
+                }
                 else
                 {
                     try {
@@ -304,27 +324,44 @@ public class CategoryPages extends JDialog {
                 String Category_id = categoryIDTxtField.getText();
                 String Category_name = categoryNameTxtField.getText();
 
-                try{
-                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
-                    PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM CATEGORY WHERE Category_id = ? AND Category_name = ?");
-
-                    preparedStatement.setString(1, Category_id);
-                    preparedStatement.setString(2, Category_name);
-                    preparedStatement.executeUpdate();
-
-                    PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM CATEGORY");
-                    ResultSet resultSet = selectStatement.executeQuery();
-                    categoryTable.setModel(DbUtils.resultSetToTableModel(resultSet));
-
-                    categoryIDTxtField.setText("");
-                    categoryNameTxtField.setText("");
-                    categoryDescriptionTxtField.setText("");
-                }
-                catch (SQLException e1)
+                //Check if the category id and category name is empty if so the user cant delete anything and they are prompted with an error otherwise the category will be deleted
+                if(Category_id.isEmpty())
                 {
-                    e1.printStackTrace();
+                    JOptionPane.showMessageDialog(CategoryPages.this,
+                            "Error: Category ID field is empty, please enter a Category ID to be deleted",
+                            "Empty Category ID",
+                            JOptionPane.ERROR_MESSAGE);
                 }
+                else if(Category_name.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(CategoryPages.this,
+                            "Error: Category Name field is empty, please enter a Category Name to be deleted",
+                            "Empty Category Name",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                {
+                    try{
+                        Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+                        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM CATEGORY WHERE Category_id = ? AND Category_name = ?");
 
+                        preparedStatement.setString(1, Category_id);
+                        preparedStatement.setString(2, Category_name);
+                        preparedStatement.executeUpdate();
+
+                        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM CATEGORY");
+                        ResultSet resultSet = selectStatement.executeQuery();
+                        categoryTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+                        categoryIDTxtField.setText("");
+                        categoryNameTxtField.setText("");
+                        categoryDescriptionTxtField.setText("");
+                    }
+                    catch (SQLException e1)
+                    {
+                        e1.printStackTrace();
+                    }
+                }
             }
         });
 
