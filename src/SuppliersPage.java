@@ -173,12 +173,61 @@ public class SuppliersPage extends JDialog {
                 }
 
 
-                //Check if duplicate supplierID or supplierName exists if it does prompt user with error otherwise add new supplier
+                //Check if duplicate supplierID or supplierName exists as well as other constraints if it does prompt user with error otherwise add new supplier
                 if(CheckSupplierID)
                 {
                     JOptionPane.showMessageDialog(SuppliersPage.this,
                             "Error: Supplier ID already exists, please choose another one",
                             "Duplicate Supplier ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Supplier_id.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(SuppliersPage.this,
+                            "Error: Supplier ID field is empty, please enter a Supplier ID",
+                            "Empty Supplier ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Supplier_name.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(SuppliersPage.this,
+                            "Error: Supplier Name field is empty, please enter a Supplier Name",
+                            "Empty Supplier Name",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Supplier_address.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(SuppliersPage.this,
+                            "Error: Supplier Address field is empty, please enter a Supplier Address",
+                            "Empty Supplier Address",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Supplier_phone.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(SuppliersPage.this,
+                            "Error: Supplier Phone number field is empty, please enter a Supplier Phone Number",
+                            "Empty Supplier Phone Number",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Supplier_email.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(SuppliersPage.this,
+                            "Error: Supplier Address field is empty, please enter a Supplier Address",
+                            "Empty Supplier Address",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(!Supplier_email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"))
+                {
+                    JOptionPane.showMessageDialog(SuppliersPage.this,
+                            "Error: Email is not in the right format",
+                            "Wrong Email Format",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Supplier_phone.length() != 10)
+                {
+                    JOptionPane.showMessageDialog(SuppliersPage.this,
+                            "Error: Phone number is incorrect length, please enter your 10 digit phone number",
+                            "Invalid Phone Number Length",
                             JOptionPane.ERROR_MESSAGE);
                 }
                 else if(CheckSupplierName)
@@ -257,12 +306,61 @@ public class SuppliersPage extends JDialog {
                     ex.printStackTrace();
                 }
 
-                //Check if duplicate supplierName exists if it does prompt user with error otherwise update supplier
+                //Check if duplicate supplierName exists as well as other constraints, if it does prompt user with error otherwise update supplier
                 if(CheckSupplierName)
                 {
                     JOptionPane.showMessageDialog(SuppliersPage.this,
                             "Error: Supplier Name already exists, please choose another one",
                             "Duplicate Supplier Name",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Supplier_id.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(SuppliersPage.this,
+                            "Error: Supplier ID field is empty, please enter a Supplier ID",
+                            "Empty Supplier ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Supplier_name.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(SuppliersPage.this,
+                            "Error: Supplier Name field is empty, please enter a Supplier Name",
+                            "Empty Supplier Name",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Supplier_address.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(SuppliersPage.this,
+                            "Error: Supplier Address field is empty, please enter a Supplier Address",
+                            "Empty Supplier Address",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Supplier_phone.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(SuppliersPage.this,
+                            "Error: Supplier Phone number field is empty, please enter a Supplier Phone Number",
+                            "Empty Supplier Phone Number",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Supplier_email.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(SuppliersPage.this,
+                            "Error: Supplier Address field is empty, please enter a Supplier Address",
+                            "Empty Supplier Address",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(!Supplier_email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"))
+                {
+                    JOptionPane.showMessageDialog(SuppliersPage.this,
+                            "Error: Email is not in the right format",
+                            "Wrong Email Format",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Supplier_phone.length() != 10)
+                {
+                    JOptionPane.showMessageDialog(SuppliersPage.this,
+                            "Error: Phone number is incorrect length, please enter your 10 digit phone number",
+                            "Invalid Phone Number Length",
                             JOptionPane.ERROR_MESSAGE);
                 }
                 else {
