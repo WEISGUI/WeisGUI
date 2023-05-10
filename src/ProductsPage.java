@@ -151,6 +151,45 @@ public class ProductsPage extends JDialog{
                 String selectedCategory = categoryNameComboBox.getSelectedItem().toString();
                 String selectedSupplier = supplierIdComboBox.getSelectedItem().toString();
 
+
+                //Boolean Variables to check if Product_id, Product_serial, and Product_name exists already
+                Boolean CheckProductID = false;
+                Boolean CheckProductName = false;
+                Boolean CheckProductSerial = false;
+
+
+                //Check if ProductID, ProductName, or ProductSerial Exists
+                try {
+                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+                    String sql = "SELECT * FROM PRODUCT WHERE Product_id = ? OR Product_name = ? OR Product_serial = ?";
+                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                    preparedStatement.setString(1, Product_id);
+                    preparedStatement.setString(2, Product_name);
+                    preparedStatement.setString(3, Product_serial);
+
+                    ResultSet resultSet = preparedStatement.executeQuery();
+
+                    //While there is an entry in the PRODUCT Table check if the Product_id, Product_name, or Product_serial is the same as the entered in Product_id, Product_name, or Product_serial
+                    while (resultSet.next()) {
+                        if (resultSet.getString("Product_id").equals(Product_id)) {
+                            CheckProductID = true;
+                        }
+
+                        if(resultSet.getString("Product_name").equals(Product_name))
+                        {
+                            CheckProductName = true;
+                        }
+
+                        if(resultSet.getString("Product_serial").equals(Product_serial))
+                        {
+                            CheckProductSerial = true;
+                        }
+                    }
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+
                 //Get Category Selection
                 categoryNameComboBox.addActionListener(new ActionListener() {
                     @Override
@@ -168,42 +207,67 @@ public class ProductsPage extends JDialog{
                 });
 
 
-                try {
+                //If else statement that prompts user error if duplicate productID, productName, or productSerial is found, if not add new product
+                if(CheckProductID)
+                {
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Product ID already exists, please choose another one",
+                            "Duplicate Product ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(CheckProductName)
+                {
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Product name already exists, please choose another one",
+                            "Duplicate Product Name",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(CheckProductSerial)
+                {
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Product Serial already exists, please choose another one",
+                            "Duplicate Product Serial",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                {
+                    try {
 
-                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+                        Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
 
-                    String sql = "INSERT INTO PRODUCT (Product_id, Exp_date, Product_name, Product_serial, Price, Product_description, Category_name, Supplier_name)"
-                            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                        String sql = "INSERT INTO PRODUCT (Product_id, Exp_date, Product_name, Product_serial, Price, Product_description, Category_name, Supplier_name)"
+                                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                    preparedStatement.setString(1, Product_id);
-                    preparedStatement.setString(2, Exp_date);
-                    preparedStatement.setString(3, Product_name);
-                    preparedStatement.setString(4, Product_serial);
-                    preparedStatement.setString(5, Price);
-                    preparedStatement.setString(6, Product_description);
-                    preparedStatement.setString(7, selectedCategory);
-                    preparedStatement.setString(8, selectedSupplier);
-                    preparedStatement.executeUpdate();
+                        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                        preparedStatement.setString(1, Product_id);
+                        preparedStatement.setString(2, Exp_date);
+                        preparedStatement.setString(3, Product_name);
+                        preparedStatement.setString(4, Product_serial);
+                        preparedStatement.setString(5, Price);
+                        preparedStatement.setString(6, Product_description);
+                        preparedStatement.setString(7, selectedCategory);
+                        preparedStatement.setString(8, selectedSupplier);
+                        preparedStatement.executeUpdate();
 
-                    PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM PRODUCT");
-                    ResultSet resultSet = selectStatement.executeQuery();
-                    productTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+                        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM PRODUCT");
+                        ResultSet resultSet = selectStatement.executeQuery();
+                        productTable.setModel(DbUtils.resultSetToTableModel(resultSet));
 
-                    productIDTxtField.setText("");
-                    expirationDateTxtField.setText("");
-                    productNameTxtField.setText("");
-                    productSerialNoTxtField.setText("");
-                    priceTxtField.setText("");
-                    productDescriptionTxtField.setText("");
-                    categorySelectionTxtField.setText("");
-                    supplierIDtxtField.setText("");
+                        productIDTxtField.setText("");
+                        expirationDateTxtField.setText("");
+                        productNameTxtField.setText("");
+                        productSerialNoTxtField.setText("");
+                        priceTxtField.setText("");
+                        productDescriptionTxtField.setText("");
+                        categorySelectionTxtField.setText("");
+                        supplierIDtxtField.setText("");
 
-                    categoryNameComboBox.setVisible(true);
-                    supplierIdComboBox.setVisible(true);
+                        categoryNameComboBox.setVisible(true);
+                        supplierIdComboBox.setVisible(true);
 
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
         });
@@ -221,6 +285,39 @@ public class ProductsPage extends JDialog{
                 String selectedCategory = categoryNameComboBox.getSelectedItem().toString();
                 String selectedSupplier = supplierIdComboBox.getSelectedItem().toString();
 
+                //Boolean Variables to check if Product_serial, and Product_name exists already
+                Boolean CheckProductName = false;
+                Boolean CheckProductSerial = false;
+
+
+                //Check if ProductName, or ProductSerial Exists
+                try {
+                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+                    String sql = "SELECT * FROM PRODUCT WHERE Product_name = ? OR Product_serial = ?";
+                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                    preparedStatement.setString(1, Product_name);
+                    preparedStatement.setString(2, Product_serial);
+
+                    ResultSet resultSet = preparedStatement.executeQuery();
+
+                    //While there is an entry in the PRODUCT Table check if the Product_name, or Product_serial is the same as the entered in Product_id, Product_name, or Product_serial
+                    while (resultSet.next()) {
+                        if(resultSet.getString("Product_name").equals(Product_name))
+                        {
+                            CheckProductName = true;
+                        }
+
+                        if(resultSet.getString("Product_serial").equals(Product_serial))
+                        {
+                            CheckProductSerial = true;
+                        }
+                    }
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+
+
                 //Get Category Selection
                 categoryNameComboBox.addActionListener(new ActionListener() {
                     @Override
@@ -237,43 +334,57 @@ public class ProductsPage extends JDialog{
                     }
                 });
 
-                try {
-                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
-                    PreparedStatement preparedStatement = connection.prepareStatement("UPDATE PRODUCT SET Exp_date = ?, Product_name = ?, Product_serial = ?, Price = ?, Product_description = ?, Category_name = ?, Supplier_name = ? WHERE Product_id = ?");
-
-                    preparedStatement.setString(1, Exp_date);
-                    preparedStatement.setString(2, Product_name);
-                    preparedStatement.setString(3, Product_serial);
-                    preparedStatement.setString(4, Price);
-                    preparedStatement.setString(5, Product_description);
-                    preparedStatement.setString(6, selectedCategory);
-                    preparedStatement.setString(7, selectedSupplier);
-                    preparedStatement.setString(8, Product_id);
-                    preparedStatement.executeUpdate();
-
-                    PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM PRODUCT");
-                    ResultSet resultSet = selectStatement.executeQuery();
-                    productTable.setModel(DbUtils.resultSetToTableModel(resultSet));
-
-                    productIDTxtField.setText("");
-                    expirationDateTxtField.setText("");
-                    productNameTxtField.setText("");
-                    productSerialNoTxtField.setText("");
-                    priceTxtField.setText("");
-                    productDescriptionTxtField.setText("");
-                    categorySelectionTxtField.setText("");
-                    supplierIDtxtField.setText("");
-
-                    categoryNameComboBox.setVisible(true);
-                    supplierIdComboBox.setVisible(true);
-
-                }
-                catch (SQLException e1)
+                //If else statement that prompts user error if duplicate productName, or productSerial is found, if not update product
+                if(CheckProductName)
                 {
-                    e1.printStackTrace();
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Product name already exists, please choose another one",
+                            "Duplicate Product Name",
+                            JOptionPane.ERROR_MESSAGE);
                 }
+                else if(CheckProductSerial)
+                {
+                    JOptionPane.showMessageDialog(ProductsPage.this,
+                            "Error: Product Serial already exists, please choose another one",
+                            "Duplicate Product Serial",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else {
 
+                    try {
+                        Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+                        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE PRODUCT SET Exp_date = ?, Product_name = ?, Product_serial = ?, Price = ?, Product_description = ?, Category_name = ?, Supplier_name = ? WHERE Product_id = ?");
 
+                        preparedStatement.setString(1, Exp_date);
+                        preparedStatement.setString(2, Product_name);
+                        preparedStatement.setString(3, Product_serial);
+                        preparedStatement.setString(4, Price);
+                        preparedStatement.setString(5, Product_description);
+                        preparedStatement.setString(6, selectedCategory);
+                        preparedStatement.setString(7, selectedSupplier);
+                        preparedStatement.setString(8, Product_id);
+                        preparedStatement.executeUpdate();
+
+                        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM PRODUCT");
+                        ResultSet resultSet = selectStatement.executeQuery();
+                        productTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+                        productIDTxtField.setText("");
+                        expirationDateTxtField.setText("");
+                        productNameTxtField.setText("");
+                        productSerialNoTxtField.setText("");
+                        priceTxtField.setText("");
+                        productDescriptionTxtField.setText("");
+                        categorySelectionTxtField.setText("");
+                        supplierIDtxtField.setText("");
+
+                        categoryNameComboBox.setVisible(true);
+                        supplierIdComboBox.setVisible(true);
+
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
+                }
             }
         });
 

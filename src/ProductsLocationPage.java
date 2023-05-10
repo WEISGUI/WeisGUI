@@ -150,7 +150,7 @@ public class ProductsLocationPage extends JDialog {
 
                     ResultSet resultSet = preparedStatement.executeQuery();
 
-                    //While there is an entry in the CATEGORY Table check if the Category_id is the same the entered in Category_id
+                    //While there is an entry in the Product Location Table check if the Location_id is the same the entered in Location_id
                     while (resultSet.next()) {
                         if (resultSet.getString("Location_id").equals(Location_id)) {
                             CheckProductLocationID = true;

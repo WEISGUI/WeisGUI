@@ -263,7 +263,7 @@
                     <properties>
                       <font name="Microsoft Sans Serif" size="18" style="1"/>
                       <foreground color="-16777216"/>
-                      <text value="Expiration Date"/>
+                      <text value="Expiration Date (YYYYMMDD)"/>
                     </properties>
                   </component>
                   <component id="51c6c" class="javax.swing.JLabel">
@@ -563,7 +563,9 @@
                         <preferred-size width="150" height="-1"/>
                       </grid>
                     </constraints>
-                    <properties/>
+                    <properties>
+                      <background color="-1"/>
+                    </properties>
                   </component>
                   <component id="da472" class="javax.swing.JTextField" binding="supplierIDtxtField">
                     <constraints>
@@ -571,7 +573,9 @@
                         <preferred-size width="150" height="-1"/>
                       </grid>
                     </constraints>
-                    <properties/>
+                    <properties>
+                      <background color="-1"/>
+                    </properties>
                   </component>
                 </children>
               </grid>
