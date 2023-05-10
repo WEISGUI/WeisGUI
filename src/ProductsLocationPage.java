@@ -138,31 +138,64 @@ public class ProductsLocationPage extends JDialog {
                 String Aisle = productLocationAisleNumberTxtField.getText();
                 String Shelf = productLocationShelfTxtField.getText();
 
+                //Boolean Variable used to check if Product Location ID already exists
+                boolean CheckProductLocationID = false;
+
+                //Check if Product Location ID Exists
                 try {
-
                     Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
-
-                    String sql = "INSERT INTO LOCATION (Location_id, Aisle, Shelf)"
-                            + "VALUES (?, ?, ?)";
-
+                    String sql = "SELECT * FROM LOCATION WHERE Location_id = ?";
                     PreparedStatement preparedStatement = connection.prepareStatement(sql);
                     preparedStatement.setString(1, Location_id);
-                    preparedStatement.setString(2, Aisle);
-                    preparedStatement.setString(3, Shelf);
-                    preparedStatement.executeUpdate();
 
-                    PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM LOCATION");
-                    ResultSet resultSet = selectStatement.executeQuery();
-                    productLocationTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+                    ResultSet resultSet = preparedStatement.executeQuery();
 
-                    productLocationIDTxtField.setText("");
-                    productLocationAisleNumberTxtField.setText("");
-                    productLocationShelfTxtField.setText("");
+                    //While there is an entry in the CATEGORY Table check if the Category_id is the same the entered in Category_id
+                    while (resultSet.next()) {
+                        if (resultSet.getString("Location_id").equals(Location_id)) {
+                            CheckProductLocationID = true;
+                        }
+                    }
 
                 } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
+                    ex.printStackTrace();
                 }
 
+                //Check if ProductLocation Matches, if so Prompt Error
+                if(CheckProductLocationID)
+                {
+                    JOptionPane.showMessageDialog(ProductsLocationPage.this,
+                            "Error: Product Location ID already exists, please choose another one",
+                            "Duplicate Product Location ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                {
+                    try {
+
+                        Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+
+                        String sql = "INSERT INTO LOCATION (Location_id, Aisle, Shelf)"
+                                + "VALUES (?, ?, ?)";
+
+                        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                        preparedStatement.setString(1, Location_id);
+                        preparedStatement.setString(2, Aisle);
+                        preparedStatement.setString(3, Shelf);
+                        preparedStatement.executeUpdate();
+
+                        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM LOCATION");
+                        ResultSet resultSet = selectStatement.executeQuery();
+                        productLocationTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+                        productLocationIDTxtField.setText("");
+                        productLocationAisleNumberTxtField.setText("");
+                        productLocationShelfTxtField.setText("");
+
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
             }
         });
 
