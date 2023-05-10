@@ -50,11 +50,58 @@ public class CreateAccountForm extends JDialog
 
                 weisNewEmployee = createNewWeisEmployee(Employee_id, EmployeeFName, EmployeeMName, EmployeeLName, EmployeeEmailAddress, EmployeeAddress, EmployeePhoneNumber, EmployeeSSN, EmployeePassword);
 
+                //Boolean Variables used to check if SSN and ID are Already Registered with us
+                boolean CheckEmpSSN = false;
+                boolean CheckEmpID = false;
 
+                //Check if Employee ID and Employee SSN Already Exists
+                try {
+                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+                    String sql = "SELECT * FROM EMPLOYEE WHERE Employee_id = ? OR Ssn = ?";
+                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                    preparedStatement.setString(1, Employee_id);
+                    preparedStatement.setString(2, EmployeeSSN);
+
+                    ResultSet resultSet = preparedStatement.executeQuery();
+
+                    //While there is an entry in the EMPLOYEE Table check if the Employee_id and SSN are the same as the entered in SSN or Employee_id
+                    while (resultSet.next())
+                    {
+                        if(resultSet.getString("Employee_id").equals(Employee_id))
+                        {
+                            CheckEmpID = true;
+                        }
+                        if(resultSet.getString("Ssn").equals(EmployeeSSN))
+                        {
+                            CheckEmpSSN = true;
+                        }
+                    }
+
+                } catch (SQLException ex)
+                {
+                    ex.printStackTrace();
+                }
+
+
+                //Massive If Else Statement that Checks Numerous Constraints
                 if (weisNewEmployee != null)
                 {
                     dispose();
                     CreateAccountSuccessful createAccountSuccessful = new CreateAccountSuccessful(null);
+                }
+                else if(CheckEmpID)
+                {
+                        JOptionPane.showMessageDialog(CreateAccountForm.this,
+                                "Error: Employee ID already exists, please choose another one",
+                                "Duplicate Employee ID",
+                                JOptionPane.ERROR_MESSAGE);
+                }
+                else if(CheckEmpSSN)
+                {
+                    JOptionPane.showMessageDialog(CreateAccountForm.this,
+                            "Error: SSN is already registered with us. Please enter your personal SSN and not anothers",
+                            "Duplicate SSN Found",
+                            JOptionPane.ERROR_MESSAGE);
                 }
                 else if(EmployeeFName.isEmpty())
                 {
@@ -83,8 +130,6 @@ public class CreateAccountForm extends JDialog
                             "Error: Email field is empty, please enter an email",
                             "Empty Create Account Email",
                             JOptionPane.ERROR_MESSAGE);
-
-
                 }
                 else if(!EmployeeEmailAddress.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"))
                 {
@@ -168,6 +213,7 @@ public class CreateAccountForm extends JDialog
         try
         {
             Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+
             Statement statement = connection.createStatement();
 
             String sql = "INSERT INTO EMPLOYEE (Employee_id, First_name, Middle_name, Last_name, Email, Address, Phone, Ssn, Password)"
@@ -185,75 +231,6 @@ public class CreateAccountForm extends JDialog
             preparedStatement.setString(9, EmployeePassword);
 
             int employeeTableRows = preparedStatement.executeUpdate();
-
-            //Check if Email Exists
-            try {
-
-                PreparedStatement prepareStatement = connection.prepareStatement("SELECT * FROM EMPLOYEE WHERE Email = ?");
-
-                preparedStatement.setString(1, EmployeeEmailAddress);
-
-                ResultSet resultSet = preparedStatement.executeQuery();
-
-                if (resultSet.next())
-                {
-                    JOptionPane.showMessageDialog(CreateAccountForm.this,
-                            "Error: Email is already registered with us. Please enter a new one, that is not already registered",
-                            "Duplicate Email Found",
-                            JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
-
-
-            //Check if SSN Already Exists
-            try {
-
-                PreparedStatement prepareStatement = connection.prepareStatement("SELECT * FROM EMPLOYEE WHERE SSN = ?");
-
-                preparedStatement.setString(1, EmployeeSSN);
-
-                ResultSet resultSet = preparedStatement.executeQuery();
-
-                if (resultSet.next())
-                {
-                    JOptionPane.showMessageDialog(CreateAccountForm.this,
-                            "Error: SSN is already registered with us. Please enter your personal SSN and not anothers",
-                            "Duplicate SSN Found",
-                            JOptionPane.ERROR_MESSAGE);
-                }
-
-
-            } catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
-
-            //Check if Employee ID Already Exists
-            try {
-
-                PreparedStatement prepareStatement = connection.prepareStatement("SELECT * FROM EMPLOYEE WHERE Employee_id = ?");
-
-                preparedStatement.setString(1, Employee_id);
-
-                ResultSet resultSet = preparedStatement.executeQuery();
-
-                if (resultSet.next())
-                {
-                    JOptionPane.showMessageDialog(CreateAccountForm.this,
-                            "Error: Employee ID already exists, please choose another one",
-                            "Duplicate Employee ID",
-                            JOptionPane.ERROR_MESSAGE);
-                }
-
-
-            } catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
-
 
             if (employeeTableRows > 0)
             {
@@ -274,7 +251,6 @@ public class CreateAccountForm extends JDialog
             e.printStackTrace();
         }
 
-
         return newWeisEmployee;
     }
 
@@ -291,5 +267,4 @@ public class CreateAccountForm extends JDialog
         }
     }
 }
-
 
