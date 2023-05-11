@@ -15,9 +15,11 @@ public class WeisScripting extends JFrame {
     private JTable outputTable;
 
     private Connection connection;
+    private Employee weisEmployee;
 
-    public WeisScripting() {
+    public WeisScripting(Employee weisEmployee) {
         // Set title, default close operation, and size of frame
+        this.weisEmployee = weisEmployee;
         setTitle("Java Swing With MySQL");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1200, 800);
@@ -112,6 +114,6 @@ public class WeisScripting extends JFrame {
 
     public static void main(String[] args) {
 
-        new WeisScripting();
+        new WeisScripting(null);
     }
 }

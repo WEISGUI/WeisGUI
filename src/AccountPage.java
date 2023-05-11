@@ -19,6 +19,7 @@ public class AccountPage extends JDialog{
     private JButton switchAccountsButton;
     private JLabel employeeID;
     private JButton productButton;
+    private JButton searchButton;
 
     private Employee weisEmployee;
 
@@ -147,6 +148,14 @@ public class AccountPage extends JDialog{
             }
         });
 
+
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                WeisScripting weisScripting = new WeisScripting(weisEmployee);
+            }
+        });
         setVisible(true);
     }
 
