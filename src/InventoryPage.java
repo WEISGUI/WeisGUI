@@ -67,7 +67,7 @@ public class InventoryPage extends JDialog {
         }
 
         inventoryTable.setModel(DbUtils.resultSetToTableModel(resultSet));
-        
+
         //Go home
         homeButton.addActionListener(new ActionListener() {
             @Override

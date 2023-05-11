@@ -253,15 +253,19 @@ public class ShipmentsPage extends JDialog {
                         inventoryIDComboBox.setVisible(true);
                         employeeIDComboBox.setVisible(true);
 
+                        //Mutli Query that does 2 things
                         //Query to sum the value of all of the shipment quantities corresponding to a given product id and then updating the inventory table with the new value
-                        String sql2 = "UPDATE INVENTORY AS i SET i.Quantity = (SELECT SUM(s.Quantity) "
-                                + "FROM SHIPMENT AS s WHERE s.Product_id = i.Product_id) "
-                                + "WHERE i.Product_id = ?";
+                        //Query to Multiple the Quantity of a Product by its Price from the Product Table
+                        String sql3 = "UPDATE INVENTORY AS inv " +
+                                "JOIN PRODUCT AS prod ON inv.Product_id = prod.Product_id " +
+                                "JOIN SHIPMENT AS ship ON inv.Product_id = ship.Product_id " +
+                                "SET inv.Quantity = inv.Quantity + ship.Quantity, " +
+                                "inv.Inventory_value = inv.Quantity * prod.Price " +
+                                "WHERE inv.Product_id = ?";
 
-                        preparedStatement = connection.prepareStatement(sql2);
+                        preparedStatement = connection.prepareStatement(sql3);
                         preparedStatement.setString(1, selectedProduct);
                         preparedStatement.executeUpdate();
-
 
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
