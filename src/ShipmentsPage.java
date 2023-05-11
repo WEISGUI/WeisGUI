@@ -340,7 +340,7 @@ public class ShipmentsPage extends JDialog {
 
                         Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
 
-                        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE PRODUCT SET Shipment_price = ?, Order_date = ?, Delivery_date = ?, Quantity = ?, Supplier_id = ?, Product_id = ?, Inventory_id = ?, Employee_id = ? WHERE Shipment_id = ?");
+                        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE SHIPMENT SET Shipment_price = ?, Order_date = ?, Delivery_date = ?, Quantity = ?, Supplier_id = ?, Product_id = ?, Inventory_id = ?, Employee_id = ? WHERE Shipment_id = ?");
 
 
                         preparedStatement.setString(1, Shipment_price);
