@@ -49,6 +49,10 @@ public class InventoryPage extends JDialog {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+
+
+
         PreparedStatement selectStatement = null;
         try {
             selectStatement = connection.prepareStatement("SELECT * FROM INVENTORY");
@@ -63,7 +67,7 @@ public class InventoryPage extends JDialog {
         }
 
         inventoryTable.setModel(DbUtils.resultSetToTableModel(resultSet));
-
+        
         //Go home
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -164,9 +168,9 @@ public class InventoryPage extends JDialog {
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
-/*
+
+                /*
                 String Inventory_id = inventoryIDTxtField.getText();
-                String Inventory_value =
                 String Updated_amount =
                 String Updated_date = updatedDateTxtField.getText();
                 String Quantity =
@@ -175,13 +179,14 @@ public class InventoryPage extends JDialog {
                 String selectedLocationID = locationIDComboBox.getSelectedItem().toString();
 
 
+                 */
+
                 //Boolean Variables to check if Product_id, Product_serial, and Product_name exists already
                 Boolean CheckProductID = false;
                 Boolean CheckEmployeeID = false;
                 Boolean CheckLocationID = false;
 
-
-
+                /*
                 //Check if ProductID, ProductName, or ProductSerial Exists
                 try {
                     String sql5 = "SELECT * FROM INVENTORY WHERE Inventory_id = ?, Inventory Value = ?, Updated_amount = ?, Updated_date = ?, Quantity = ?, Product_id = ?, Employee_id = ?, Location_id = ?";
@@ -195,6 +200,7 @@ public class InventoryPage extends JDialog {
                     preparedStatement.setString(7, selectedEmployeeID);
                     preparedStatement.setString(8, selectedLocationID);
 
+                    inventory = Price * Quantity;
                     ResultSet resultSet = preparedStatement.executeQuery();
 
                     //Delete this
@@ -204,7 +210,7 @@ public class InventoryPage extends JDialog {
                     ex.printStackTrace();
                 }
 
- */
+                 */
             }
         });
 

@@ -1,3 +1,4 @@
+import com.mysql.cj.x.protobuf.MysqlxPrepare;
 import net.proteanit.sql.DbUtils;
 
 import javax.swing.*;
@@ -252,6 +253,16 @@ public class ShipmentsPage extends JDialog {
                         inventoryIDComboBox.setVisible(true);
                         employeeIDComboBox.setVisible(true);
 
+                        //Query to sum the value of all of the shipment quantities corresponding to a given product id and then updating the inventory table with the new value
+                        String sql2 = "UPDATE INVENTORY AS i SET i.Quantity = (SELECT SUM(s.Quantity) "
+                                + "FROM SHIPMENT AS s WHERE s.Product_id = i.Product_id) "
+                                + "WHERE i.Product_id = ?";
+
+                        preparedStatement = connection.prepareStatement(sql2);
+                        preparedStatement.setString(1, selectedProduct);
+                        preparedStatement.executeUpdate();
+
+
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -292,7 +303,6 @@ public class ShipmentsPage extends JDialog {
                         if (resultSet.getString("Product_id").equals(Shipment_id)) {
                             checkShipmentID = true;
                         }
-
                     }
 
                 } catch (SQLException ex) {
@@ -438,6 +448,7 @@ public class ShipmentsPage extends JDialog {
                         preparedStatement.setString(1, Shipment_id);
 
                         preparedStatement.executeUpdate();
+
 
 
                         PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM SHIPMENT");
