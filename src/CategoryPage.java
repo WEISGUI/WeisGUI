@@ -8,6 +8,7 @@ public class CategoryPage extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(1535,850));
 
+
         // Create a panel for the logo and the navbar
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BorderLayout());
