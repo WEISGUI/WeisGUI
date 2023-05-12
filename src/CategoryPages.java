@@ -274,14 +274,19 @@ public class CategoryPages extends JDialog {
                 //Check if Category Name Exists
                 try {
                     Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
-                    String sql = "SELECT * FROM CATEGORY WHERE Category_name = ?";
+                    String sql = "SELECT * FROM CATEGORY WHERE Category_id = ? OR Category_name = ?";
                     PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                    preparedStatement.setString(1, Category_name);
+                    preparedStatement.setString(1, Category_id);
+                    preparedStatement.setString(2, Category_name);
 
                     ResultSet resultSet = preparedStatement.executeQuery();
 
                     //While there is an entry in the CATEGORY Table check if the Category_name is the same the entered in Category_name
                     while (resultSet.next()) {
+                        if(resultSet.getString("Category_id").equals(Category_id))
+                        {
+                            break;
+                        }
                         if (resultSet.getString("Category_name").equals(Category_name)) {
                             CheckCategoryName = true;
                         }
@@ -292,7 +297,12 @@ public class CategoryPages extends JDialog {
                 }
 
                 //Check if the Category_name is the same
-                if (CheckCategoryName) {
+                if(Category_id.equals(Category_name))
+                {
+
+                }
+                else if(CheckCategoryName)
+                {
                 JOptionPane.showMessageDialog(CategoryPages.this,
                         "Error: Category Name already exists, please choose another one",
                         "Duplicate Category Name",

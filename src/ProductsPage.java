@@ -359,15 +359,20 @@ public class ProductsPage extends JDialog{
                 //Check if ProductName, or ProductSerial Exists
                 try {
                     Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
-                    String sql = "SELECT * FROM PRODUCT WHERE Product_name = ? OR Product_serial = ?";
+                    String sql = "SELECT * FROM PRODUCT WHERE Product_id = ? OR Product_name = ? OR Product_serial = ?";
                     PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                    preparedStatement.setString(1, Product_name);
-                    preparedStatement.setString(2, Product_serial);
+                    preparedStatement.setString(1, Product_id);
+                    preparedStatement.setString(2, Product_name);
+                    preparedStatement.setString(3, Product_serial);
 
                     ResultSet resultSet = preparedStatement.executeQuery();
 
                     //While there is an entry in the PRODUCT Table check if the Product_name, or Product_serial is the same as the entered in Product_id, Product_name, or Product_serial
                     while (resultSet.next()) {
+                        if(resultSet.getString("Product_id").equals(Product_id))
+                        {
+                            break;
+                        }
                         if(resultSet.getString("Product_name").equals(Product_name))
                         {
                             CheckProductName = true;
@@ -401,7 +406,11 @@ public class ProductsPage extends JDialog{
                 });
 
                 //If else statement that prompts user error if duplicate productName, or productSerial is found, if not update product
-                if(CheckProductName)
+                if(Product_id.equals(Product_name))
+                {
+
+                }
+                else if(CheckProductName)
                 {
                     JOptionPane.showMessageDialog(ProductsPage.this,
                             "Error: Product name already exists, please choose another one",

@@ -299,14 +299,19 @@ public class SuppliersPage extends JDialog {
                 //Check if SupplierName exists
                 try {
                     Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
-                    String sql = "SELECT * FROM SUPPLIER WHERE Supplier_name = ?";
+                    String sql = "SELECT * FROM SUPPLIER WHERE Supplier_id = ? OR Supplier_name = ? ";
                     PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                    preparedStatement.setString(1, Supplier_name);
+                    preparedStatement.setString(1, Supplier_id);
+                    preparedStatement.setString(2, Supplier_name);
 
                     ResultSet resultSet = preparedStatement.executeQuery();
 
                     //While there is an entry in the SUPPLIER Table check if the Supplier_name is the same as the entered in Supplier_name
                     while (resultSet.next()) {
+                        if(resultSet.getString("Supplier_id").equals(Supplier_id))
+                        {
+                            break;
+                        }
                         if(resultSet.getString("Supplier_name").equals(Supplier_name))
                         {
                             CheckSupplierName = true;
@@ -317,7 +322,11 @@ public class SuppliersPage extends JDialog {
                 }
 
                 //Check if duplicate supplierName exists as well as other constraints, if it does prompt user with error otherwise update supplier
-                if(CheckSupplierName)
+                if(Supplier_id.equals(Supplier_name))
+                {
+
+                }
+                else if(CheckSupplierName)
                 {
                     JOptionPane.showMessageDialog(SuppliersPage.this,
                             "Error: Supplier Name already exists, please choose another one",
