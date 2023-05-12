@@ -24,6 +24,7 @@ public class ProductsLocationPage extends JDialog {
     private JTextField productLocationShelfTxtField;
     private JTextField productLocationAisleNumberTxtField;
     private JButton productButton;
+    private JButton searchButton;
 
     private Employee weisEmployee;
     public ProductsLocationPage(Employee weisEmployee) throws SQLException
@@ -127,6 +128,15 @@ public class ProductsLocationPage extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 ProductsPage productsPage = new ProductsPage(weisEmployee);
+            }
+        });
+
+        //Go to Search
+        searchButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                dispose();
+                WeisScripting weisScripting = new WeisScripting(weisEmployee);
             }
         });
 

@@ -36,6 +36,7 @@ public class ShipmentsPage extends JDialog {
     private JTextField productSelectText;
     private JTextField inventorySelectText;
     private JTextField employeeSelectText;
+    private JButton searchButton;
 
 
     private Employee weisEmployee;
@@ -138,6 +139,18 @@ public class ShipmentsPage extends JDialog {
                 ProductsPage productsPage = new ProductsPage(weisEmployee);
             }
         });
+
+
+        //Go to Search
+        searchButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                dispose();
+                WeisScripting weisScripting = new WeisScripting(weisEmployee);
+            }
+        });
+
+
         //Add Shipments
         addShipmentButton.addActionListener(new ActionListener() {
             @Override

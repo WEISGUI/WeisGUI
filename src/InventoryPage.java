@@ -32,6 +32,7 @@ public class InventoryPage extends JDialog {
     private JTextField selectedProductIDtxtField;
     private JTextField selectedEmployeeIDTxtField;
     private JTextField selectedLocationIDTxtField;
+    private JButton searchButton;
 
     private Employee weisEmployee;
 
@@ -135,6 +136,15 @@ public class InventoryPage extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 ProductsPage productsPage = new ProductsPage(weisEmployee);
+            }
+        });
+
+        //Go to Search
+        searchButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                dispose();
+                WeisScripting weisScripting = new WeisScripting(weisEmployee);
             }
         });
 

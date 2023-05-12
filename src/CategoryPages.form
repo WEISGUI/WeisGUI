@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="CategoryPagePane" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="911" height="787"/>
+      <xy x="20" y="20" width="1002" height="787"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -46,7 +46,7 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <grid id="d7551" layout-manager="GridLayoutManager" row-count="6" column-count="10" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="d7551" layout-manager="GridLayoutManager" row-count="6" column-count="11" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
@@ -72,7 +72,7 @@
                       </vspacer>
                       <hspacer id="33633">
                         <constraints>
-                          <grid row="3" column="9" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <grid row="3" column="10" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
                       </hspacer>
                       <vspacer id="f0ae">
@@ -154,7 +154,7 @@
                       </component>
                       <component id="79908" class="javax.swing.JButton" binding="accountButton" default-binding="true">
                         <constraints>
-                          <grid row="4" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <grid row="4" column="9" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
                           <background color="-1"/>
@@ -186,6 +186,16 @@
                           <background color="-1"/>
                           <foreground color="-16777216"/>
                           <text value="Products"/>
+                        </properties>
+                      </component>
+                      <component id="faec1" class="javax.swing.JButton" binding="searchButton">
+                        <constraints>
+                          <grid row="4" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <background color="-1"/>
+                          <foreground color="-16777216"/>
+                          <text value="Search"/>
                         </properties>
                       </component>
                     </children>

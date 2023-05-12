@@ -29,6 +29,7 @@ public class SuppliersPage extends JDialog {
     private JTextField supplierNameTxtField;
     private JTextField supplierIDTxtField;
     private JButton productButton;
+    private JButton searchButton;
 
     public SuppliersPage(Employee weisEmployee) throws SQLException
     {
@@ -128,6 +129,15 @@ public class SuppliersPage extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 ProductsPage productsPage = new ProductsPage(weisEmployee);
+            }
+        });
+
+        //Go to Search
+        searchButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                dispose();
+                WeisScripting weisScripting = new WeisScripting(weisEmployee);
             }
         });
 

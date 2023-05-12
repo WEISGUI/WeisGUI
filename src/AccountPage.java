@@ -152,19 +152,10 @@ public class AccountPage extends JDialog{
 
 
         searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e)
+            {
                 dispose();
                 WeisScripting weisScripting = new WeisScripting(weisEmployee);
-                weisScripting.setVisible(true);
-                weisScripting.addWindowListener(new WindowAdapter() {
-                    @Override
-                    public void windowClosing(WindowEvent e) {
-                        dispose();
-                        HomePage homePage = new HomePage(weisEmployee);
-                        homePage.setVisible(true);
-                    }
-                });
             }
         });
         setVisible(true);

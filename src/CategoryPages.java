@@ -28,6 +28,7 @@ public class CategoryPages extends JDialog {
     private JTable categoryTable;
     private JScrollPane categoryScrollPane;
     private JButton productButton;
+    private JButton searchButton;
     private Employee weisEmployee;
     public CategoryPages(Employee weisEmployee) throws SQLException {
 
@@ -116,6 +117,15 @@ public class CategoryPages extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 AccountPage accountPage = new AccountPage(weisEmployee);
+            }
+        });
+
+        //Go to Search
+        searchButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                dispose();
+                WeisScripting weisScripting = new WeisScripting(weisEmployee);
             }
         });
 

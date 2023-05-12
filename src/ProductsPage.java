@@ -31,6 +31,7 @@ public class ProductsPage extends JDialog{
     private JComboBox supplierIdComboBox;
     private JTextField categorySelectionTxtField;
     private JTextField supplierIDtxtField;
+    private JButton searchButton;
 
     private Employee weisEmployee;
 
@@ -135,6 +136,15 @@ public class ProductsPage extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 ProductsPage productsPage = new ProductsPage(weisEmployee);
+            }
+        });
+
+        //Go to Search
+        searchButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                dispose();
+                WeisScripting weisScripting = new WeisScripting(weisEmployee);
             }
         });
 
