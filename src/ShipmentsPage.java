@@ -277,7 +277,6 @@ public class ShipmentsPage extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String Shipment_id = shipmentIDTxtField.getText();
-                String Shipment_price = shipmentPriceTxtField.getText();
                 String Order_date = orderDateTxtField.getText();
                 String Delivery_date = deliveryDateTxtField.getText();
                 String Quantity = quantityTxtField.getText();
@@ -395,7 +394,6 @@ public class ShipmentsPage extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String Shipment_id = shipmentIDTxtField.getText();
-                String Shipment_price = shipmentPriceTxtField.getText();
                 String Order_date = orderDateTxtField.getText();
                 String Delivery_date = deliveryDateTxtField.getText();
                 String Quantity = quantityTxtField.getText();

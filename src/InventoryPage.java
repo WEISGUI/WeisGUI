@@ -17,7 +17,6 @@ public class InventoryPage extends JDialog {
     private JButton inventoryButton;
     private JButton accountButton;
     private JButton productButton;
-    private JTextField updatedAmountTxtField;
     private JTextField inventoryValueTxtField;
     private JTextField inventoryIDTxtField;
     private JButton addInventoryButton;
@@ -30,6 +29,9 @@ public class InventoryPage extends JDialog {
     private JComboBox employeeIDComboBox;
     private JComboBox locationIDComboBox;
     private JComboBox productIDComboBox;
+    private JTextField selectedProductIDtxtField;
+    private JTextField selectedEmployeeIDTxtField;
+    private JTextField selectedLocationIDTxtField;
 
     private Employee weisEmployee;
 
@@ -42,31 +44,11 @@ public class InventoryPage extends JDialog {
         setModal(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        //Populate Inventory Table
-        Connection connection = null;
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+            createConnection();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
-
-
-        PreparedStatement selectStatement = null;
-        try {
-            selectStatement = connection.prepareStatement("SELECT * FROM INVENTORY");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        ResultSet resultSet = null;
-        try {
-            resultSet = selectStatement.executeQuery();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        inventoryTable.setModel(DbUtils.resultSetToTableModel(resultSet));
 
         //Go home
         homeButton.addActionListener(new ActionListener() {
@@ -156,77 +138,197 @@ public class InventoryPage extends JDialog {
             }
         });
 
-        setVisible(true);
 
+        //Add Inventory
         addInventoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                Connection connection = null;
-                try {
-                    connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-
-                /*
                 String Inventory_id = inventoryIDTxtField.getText();
-                String Updated_amount =
+                String Inventory_value = inventoryValueTxtField.getText();
                 String Updated_date = updatedDateTxtField.getText();
-                String Quantity =
+                String Quantity = quantityTxtField.getText();
                 String selectedProductID = productIDComboBox.getSelectedItem().toString();
                 String selectedEmployeeID = employeeIDComboBox.getSelectedItem().toString();
                 String selectedLocationID = locationIDComboBox.getSelectedItem().toString();
 
-
-                 */
-
-                //Boolean Variables to check if Product_id, Product_serial, and Product_name exists already
+                //Boolean Variables to check if Product_id, Employee_id, and Location_id exists already
                 Boolean CheckProductID = false;
                 Boolean CheckEmployeeID = false;
                 Boolean CheckLocationID = false;
 
-                /*
-                //Check if ProductID, ProductName, or ProductSerial Exists
+                //Get Product Selection
+                productIDComboBox.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        selectedProductIDtxtField.setText(selectedProductID);
+                    }
+                });
+
+                //Get Employee Selection
+                employeeIDComboBox.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        selectedEmployeeIDTxtField.setText(selectedEmployeeID);
+                    }
+                });
+
+                //Get Location Selection
+                locationIDComboBox.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        selectedLocationIDTxtField.setText(selectedLocationID);
+                    }
+                });
+
+                //Constraint to find out if the inventory value is not equal to the quantity * price
+                Connection connection = null;
+                double Price = 0;
                 try {
-                    String sql5 = "SELECT * FROM INVENTORY WHERE Inventory_id = ?, Inventory Value = ?, Updated_amount = ?, Updated_date = ?, Quantity = ?, Product_id = ?, Employee_id = ?, Location_id = ?";
-                    PreparedStatement preparedStatement = connection.prepareStatement(sql5);
-                    preparedStatement.setString(1, Inventory_id);
-                    preparedStatement.setString(2, Inventory_value);
-                    preparedStatement.setString(3, Updated_amount);
-                    preparedStatement.setString(4, Updated_date);
-                    preparedStatement.setString(5, Quantity);
-                    preparedStatement.setString(6, selectedProductID);
-                    preparedStatement.setString(7, selectedEmployeeID);
-                    preparedStatement.setString(8, selectedLocationID);
+                    connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
 
-                    inventory = Price * Quantity;
-                    ResultSet resultSet = preparedStatement.executeQuery();
+                    String sql = "SELECT Price FROM PRODUCT WHERE Product_id = ?";
+                    PreparedStatement preparedStatement;
+                    preparedStatement = connection.prepareStatement(sql);
+                    preparedStatement.setString(1, selectedProductID);
+                    ResultSet resultSet1 = preparedStatement.executeQuery();
 
-                    //Delete this
-                    resultSet.next();
-                }
-                catch(SQLException ex) {
-                    ex.printStackTrace();
+                    if (resultSet1.next()) {
+                        Price = resultSet1.getDouble("Price");
+                    }
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
                 }
 
-                 */
+                double convertQuantityToDouble = Double.parseDouble(Quantity);
+                double CheckInventoryValue = convertQuantityToDouble * Price;
+
+                if (Double.compare(CheckInventoryValue, Double.parseDouble(Inventory_value)) == 0) {
+                    String sql2 = "INSERT INTO INVENTORY (Inventory_id, Inventory_value, Updated_date, Quantity, Product_id, Employee_id, Location_id)"
+                            + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    try {
+                        connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+
+                        PreparedStatement preparedStatement = connection.prepareStatement(sql2);
+                        preparedStatement.setString(1, Inventory_id);
+                        preparedStatement.setString(2,Inventory_value);
+                        preparedStatement.setString(3, Updated_date);
+                        preparedStatement.setString(4, Quantity);
+                        preparedStatement.setString(5, selectedProductID);
+                        preparedStatement.setString(6, selectedEmployeeID);
+                        preparedStatement.setString(7, selectedLocationID);
+
+                        preparedStatement.executeUpdate();
+
+                        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM INVENTORY");
+                        ResultSet resultSet = selectStatement.executeQuery();
+                        inventoryTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+                        inventoryIDTxtField.setText("");
+                        inventoryValueTxtField.setText("");
+                        updatedDateTxtField.setText("");
+                        quantityTxtField.setText("");
+                        selectedProductIDtxtField.setText("");
+                        selectedEmployeeIDTxtField.setText("");
+                        selectedLocationIDTxtField.setText("");
+
+
+                        productIDComboBox.setVisible(true);
+                        employeeIDComboBox.setVisible(true);
+                        locationIDComboBox.setVisible(true);
+
+
+
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(InventoryPage.this,
+                            "Error: Inventory Value does not equal quantity * product price. Please refer back to the products page to check the price and apply it accordingly",
+                            "Incorrect Inventory Value",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
 
+        //Update Inventory
         updateInventoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
             }
         });
+
+        //Delete Inventory
         deleteInventoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
             }
         });
+
+        setVisible(true);
+    }
+
+
+    //Create Connection and Populate ComboBoxes
+    public void createConnection() throws SQLException {
+
+        Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM INVENTORY");
+        ResultSet resultSet = selectStatement.executeQuery();
+        inventoryTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+        //Check if ProductID, ProductName, or ProductSerial Exists
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+
+            String sql = "SELECT * FROM PRODUCT";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet2 = preparedStatement.executeQuery();
+
+            while (resultSet2.next()) {
+                productIDComboBox.addItem(resultSet2.getString("Product_id"));
+                productIDComboBox.setVisible(true);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+
+            String sql = "SELECT * FROM EMPLOYEE";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet2 = preparedStatement.executeQuery();
+
+            while (resultSet2.next()) {
+                employeeIDComboBox.addItem(resultSet2.getString("Employee_id"));
+                employeeIDComboBox.setVisible(true);
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+
+            String sql = "SELECT * FROM LOCATION";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet2 = preparedStatement.executeQuery();
+
+            while (resultSet2.next()) {
+                locationIDComboBox.addItem(resultSet2.getString("Location_id"));
+                locationIDComboBox.setVisible(true);
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     public static void main(String[] args)
