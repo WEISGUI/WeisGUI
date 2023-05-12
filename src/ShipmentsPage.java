@@ -167,7 +167,7 @@ public class ShipmentsPage extends JDialog {
 
                     //While there is an entry in the PRODUCT Table check if the Product_id, Product_name, or Product_serial is the same as the entered in Product_id, Product_name, or Product_serial
                     while (resultSet.next()) {
-                        if (resultSet.getString("Product_id").equals(Shipment_id)) {
+                        if (resultSet.getString("Shipment_id").equals(Shipment_id)) {
                             checkShipmentID = true;
                         }
 
@@ -207,6 +207,7 @@ public class ShipmentsPage extends JDialog {
                         employeeSelectText.setText(selectedEmployee);
                     }
                 });
+
                 if (Shipment_id.isEmpty()) {
                     JOptionPane.showMessageDialog(ShipmentsPage.this,
                             "Error: Shipment ID field is empty, please enter a Shipment ID",
