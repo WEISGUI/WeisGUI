@@ -36,11 +36,11 @@ public class WeisScripting extends JFrame {
     final String expensiveProduct = "select Product_name, Price from PRODUCT where Price > 5";
     final String categoryAthroughL = "SELECT Category_name FROM CATEGORY WHERE Category_name BETWEEN \"A\" AND \"L\" ORDER BY Category_name";
     final String categoryMthroughZ = "SELECT Category_name FROM CATEGORY WHERE Category_name BETWEEN \"M\" AND \"Z\" ORDER BY Category_name";
-
     final String shipmentsArrivingSoon = "SELECT Shipment_id, Delivery_date, Quantity, Product_id FROM SHIPMENT WHERE Delivery_date BETWEEN curdate() AND curdate() + 7;";
-
-    final String k = "";
-
+    final String productSupplier = "select Product_name, Supplier_name from PRODUCT;";
+    final String handlesShipment = "select First_name, Last_name, Shipment_id from EMPLOYEE, SHIPMENT WHERE EMPLOYEE.Employee_id = SHIPMENT.Employee_id";
+    final String handlesInventory = "select First_name, Last_name, Inventory_id from EMPLOYEE, INVENTORY WHERE EMPLOYEE.Employee_id = INVENTORY.Employee_id";
+   final  String shipmentDate = "select Shipment_id, Order_date, Delivery_date from SHIPMENT";
     public WeisScripting(Employee weisEmployee) {
         // Set title, default close operation, and size of frame
         this.weisEmployee = weisEmployee;
@@ -148,6 +148,10 @@ public class WeisScripting extends JFrame {
         listModel.addElement("- categories a through l");
         listModel.addElement("- categories m through z");
         listModel.addElement("- shipments arriving soon (next 7 days)");
+        listModel.addElement("- product supplier");
+        listModel.addElement("- handles shipment");
+        listModel.addElement("- handles inventory");
+        listModel.addElement("- shipment date");
 
         // Create instruction panel
         JPanel instructPanel = new JPanel();
@@ -205,8 +209,21 @@ public class WeisScripting extends JFrame {
                 case "shipments arriving soon":
                     input = shipmentsArrivingSoon;
                     break;
+                case "product supplier":
+                    input = productSupplier;
+                    break;
+                case "handles shipment":
+                    input = handlesShipment;
+                    break;
+                case "handles inventory":
+                    input = handlesInventory;
+                    break;
+                case "shipment date":
+                    input = shipmentDate;
+                    break;
+
                     default:
-                    input = "select * from EMPLOYEE";
+                    input = "select * from PRODUCT";
                     break;
 
             }
