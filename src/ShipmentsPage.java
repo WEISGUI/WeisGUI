@@ -1,6 +1,7 @@
 import com.mysql.cj.x.protobuf.MysqlxPrepare;
 import net.proteanit.sql.DbUtils;
 
+import javax.print.attribute.IntegerSyntax;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -221,13 +222,71 @@ public class ShipmentsPage extends JDialog {
                     }
                 });
 
-                if (Shipment_id.isEmpty()) {
+
+                if(checkShipmentID)
+                {
+                    JOptionPane.showMessageDialog(ShipmentsPage.this,
+                            "Error: Shipment ID already exists, please enter a new Shipment ID",
+                            "Duplicate Shipment ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if (Shipment_id.isEmpty()) {
                     JOptionPane.showMessageDialog(ShipmentsPage.this,
                             "Error: Shipment ID field is empty, please enter a Shipment ID",
                             "Empty Shipment ID",
                             JOptionPane.ERROR_MESSAGE);
 
-                } else {
+                }
+                else if(Order_date.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ShipmentsPage.this,
+                            "Error: Order Date field is empty, please enter a Order Date",
+                            "Empty Order Date",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Delivery_date.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ShipmentsPage.this,
+                            "Error: Delivery Date field is empty, please enter a Delivery Date",
+                            "Empty Delivery Date",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Quantity.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ShipmentsPage.this,
+                            "Error: Quantity field is empty, please enter a Quantity",
+                            "Empty Quantity",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(selectedSupplier.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ShipmentsPage.this,
+                            "Error: Supplier ID field is empty, please enter a Supplier ID",
+                            "Empty Supplier ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(selectedProduct.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ShipmentsPage.this,
+                            "Error: Product ID field is empty, please enter a Product ID",
+                            "Empty Product ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(selectedInventory.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ShipmentsPage.this,
+                            "Error: Inventory ID field is empty, please enter a Inventory ID",
+                            "Empty Inventory ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(selectedEmployee.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ShipmentsPage.this,
+                            "Error: Employee ID field is empty, please enter a Employee ID",
+                            "Empty Employee ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else {
                     try {
 
                         Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
@@ -354,28 +413,86 @@ public class ShipmentsPage extends JDialog {
                         employeeSelectText.setText(selectedEmployee);
                     }
                 });
+
+
                 if (checkShipmentID) {
                     JOptionPane.showMessageDialog(ShipmentsPage.this,
                             "Error: Shipment ID field is empty, please enter a Shipment ID",
                             "Empty Shipment ID",
                             JOptionPane.ERROR_MESSAGE);
 
-                } else {
+                } else if (Shipment_id.isEmpty()) {
+                    JOptionPane.showMessageDialog(ShipmentsPage.this,
+                            "Error: Shipment ID field is empty, please enter a Shipment ID",
+                            "Empty Shipment ID",
+                            JOptionPane.ERROR_MESSAGE);
+
+                }
+                else if(Order_date.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ShipmentsPage.this,
+                            "Error: Order Date field is empty, please enter a Order Date",
+                            "Empty Order Date",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Delivery_date.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ShipmentsPage.this,
+                            "Error: Delivery Date field is empty, please enter a Delivery Date",
+                            "Empty Delivery Date",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(Quantity.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ShipmentsPage.this,
+                            "Error: Quantity field is empty, please enter a Quantity",
+                            "Empty Quantity",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(selectedSupplier.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ShipmentsPage.this,
+                            "Error: Supplier ID field is empty, please enter a Supplier ID",
+                            "Empty Supplier ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(selectedProduct.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ShipmentsPage.this,
+                            "Error: Product ID field is empty, please enter a Product ID",
+                            "Empty Product ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(selectedInventory.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ShipmentsPage.this,
+                            "Error: Inventory ID field is empty, please enter a Inventory ID",
+                            "Empty Inventory ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else if(selectedEmployee.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(ShipmentsPage.this,
+                            "Error: Employee ID field is empty, please enter a Employee ID",
+                            "Empty Employee ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else {
                     try {
 
                         Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
 
-                        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE SHIPMENT SET Order_date = ?, Delivery_date = ?, Quantity = ?, Supplier_id = ?, Product_id = ?, Inventory_id = ?, Employee_id = ? WHERE Shipment_id = ?");
+                        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE SHIPMENT SET Order_date = ?, Delivery_date = ?, Supplier_id = ?, Product_id = ?, Inventory_id = ?, Employee_id = ? WHERE Shipment_id = ? AND Quantity = ?");
 
 
                         preparedStatement.setString(1, Order_date);
                         preparedStatement.setString(2, Delivery_date);
-                        preparedStatement.setString(3, Quantity);
-                        preparedStatement.setString(4, selectedSupplier);
-                        preparedStatement.setString(5, selectedProduct);
-                        preparedStatement.setString(6, selectedInventory);
-                        preparedStatement.setString(7, selectedEmployee);
-                        preparedStatement.setString(8, Shipment_id);
+                        preparedStatement.setString(3, selectedSupplier);
+                        preparedStatement.setString(4, selectedProduct);
+                        preparedStatement.setString(5, selectedInventory);
+                        preparedStatement.setString(6, selectedEmployee);
+                        preparedStatement.setString(7, Shipment_id);
+                        preparedStatement.setString(8, Quantity);
                         preparedStatement.executeUpdate();
 
                         PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM SHIPMENT");
@@ -445,6 +562,8 @@ public class ShipmentsPage extends JDialog {
                         employeeSelectText.setText(selectedEmployee);
                     }
                 });
+
+
                 if (Shipment_id.isEmpty()) {
                     JOptionPane.showMessageDialog(ShipmentsPage.this,
                             "Error: ShipmentID is empty, please enter a Shipment to be deleted",
@@ -457,10 +576,7 @@ public class ShipmentsPage extends JDialog {
                         PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM SHIPMENT WHERE Shipment_id = ?");
 
                         preparedStatement.setString(1, Shipment_id);
-
-                        preparedStatement.executeUpdate();
-
-
+                        ResultSet resultSet1 = preparedStatement.executeQuery();
 
                         PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM SHIPMENT");
                         ResultSet resultSet = selectStatement.executeQuery();

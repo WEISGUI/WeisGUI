@@ -3,7 +3,7 @@
   <grid id="27dc6" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="1006" height="1055"/>
+      <xy x="20" y="20" width="1074" height="1055"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -437,9 +437,10 @@
                               <autoCreateRowSorter value="false"/>
                               <autoResizeMode value="2"/>
                               <background color="-59892"/>
-                              <font name="Microsoft Sans Serif" size="16" style="1"/>
+                              <font name="Microsoft Sans Serif" size="12" style="1"/>
                               <foreground color="-1"/>
                               <gridColor color="-1"/>
+                              <preferredScrollableViewportSize width="650" height="400"/>
                             </properties>
                           </component>
                         </children>
