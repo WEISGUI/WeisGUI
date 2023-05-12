@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
 public class AccountPage extends JDialog{
@@ -32,7 +34,7 @@ public class AccountPage extends JDialog{
         this.weisEmployee = weisEmployee;
         setTitle("Weis Markets - Home Page");
         setContentPane(AccountPagePanel);
-        setMinimumSize(new Dimension(1535,850));
+        setMinimumSize(new Dimension(1535, 850));
         setModal(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -154,12 +156,19 @@ public class AccountPage extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 WeisScripting weisScripting = new WeisScripting(weisEmployee);
-                HomePage homePage = new HomePage(weisEmployee);
+                weisScripting.setVisible(true);
+                weisScripting.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        dispose();
+                        HomePage homePage = new HomePage(weisEmployee);
+                        homePage.setVisible(true);
+                    }
+                });
             }
         });
         setVisible(true);
     }
-
 
     public static void main(String[] args)
     {

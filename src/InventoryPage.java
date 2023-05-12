@@ -374,12 +374,27 @@ public class InventoryPage extends JDialog {
                 double convertQuantityToDouble = Double.parseDouble(Quantity);
                 double CheckInventoryValue = convertQuantityToDouble * Price;
 
-                if (Double.compare(CheckInventoryValue, Double.parseDouble(Inventory_value)) == 0)
+                if (Double.compare(CheckInventoryValue, Double.parseDouble(Inventory_value)) != 0)
+                {
+                    JOptionPane.showMessageDialog(InventoryPage.this,
+                            "Error: Inventory Value does not equal quantity * product price. Please refer back to the products page to check the price and apply it accordingly",
+                            "Incorrect Inventory Value",
+                            JOptionPane.ERROR_MESSAGE);
+
+                }
+                else if (Inventory_value.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(InventoryPage.this,
+                            "Error: Inventory ID is empty, please enter one in",
+                            "EmptyInventory ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else
                 {
 
                     try {
-                        connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
 
+                        connection = DriverManager.getConnection("URL", "TEST", "test");
 
                         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE INVENTORY SET Inventory_value = ?, Updated_date = ?, Quantity = ?, Product_id = ?, Employee_id = ?, Location_id = ? WHERE Inventory_id = ?");
                         preparedStatement.setString(1, Inventory_value);
@@ -414,20 +429,6 @@ public class InventoryPage extends JDialog {
                         throw new RuntimeException(ex);
                     }
                 }
-                else if (Inventory_id.isEmpty())
-                {
-                    JOptionPane.showMessageDialog(InventoryPage.this,
-                            "Error: Inventory ID is empty, please enter one in",
-                            "EmptyInventory ID",
-                            JOptionPane.ERROR_MESSAGE);
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(InventoryPage.this,
-                            "Error: Inventory Value does not equal quantity * product price. Please refer back to the products page to check the price and apply it accordingly",
-                            "Incorrect Inventory Value",
-                            JOptionPane.ERROR_MESSAGE);
-                }
             }
         });
 
@@ -447,16 +448,19 @@ public class InventoryPage extends JDialog {
                 Boolean CheckProductID = false;
                 Boolean CheckInventoryID = false;
 
-                try {
-                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
-
-
-                        connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
-
-
+                if(Inventory_id.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(InventoryPage.this,
+                            "Error: Inventory ID is empty, please enter one in to be deleted",
+                            "EmptyInventory ID",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                {
+                    try {
+                        Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
                         PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM INVENTORY WHERE Inventory_id = ?");
                         preparedStatement.setString(1, Inventory_id);
-
                         preparedStatement.executeUpdate();
 
                         PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM INVENTORY");
@@ -481,7 +485,8 @@ public class InventoryPage extends JDialog {
                         throw new RuntimeException(ex);
                     }
                 }
-            });
+            }
+        });
         setVisible(true);
     }
 
