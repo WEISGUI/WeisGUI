@@ -435,10 +435,53 @@ public class InventoryPage extends JDialog {
         deleteInventoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String Inventory_id = inventoryIDTxtField.getText();
+                String Inventory_value = inventoryValueTxtField.getText();
+                String Updated_date = updatedDateTxtField.getText();
+                String Quantity = quantityTxtField.getText();
+                String selectedProductID = productIDComboBox.getSelectedItem().toString();
+                String selectedEmployeeID = employeeIDComboBox.getSelectedItem().toString();
+                String selectedLocationID = locationIDComboBox.getSelectedItem().toString();
 
-            }
-        });
+                //Boolean Variables to check if Product_id, Employee_id, and Location_id exists already
+                Boolean CheckProductID = false;
+                Boolean CheckInventoryID = false;
 
+                try {
+                    Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+
+
+                        connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
+
+
+                        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM INVENTORY WHERE Inventory_id = ?");
+                        preparedStatement.setString(1, Inventory_id);
+
+                        preparedStatement.executeUpdate();
+
+                        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM INVENTORY");
+                        ResultSet resultSet = selectStatement.executeQuery();
+                        inventoryTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+                        inventoryIDTxtField.setText("");
+                        inventoryValueTxtField.setText("");
+                        updatedDateTxtField.setText("");
+                        quantityTxtField.setText("");
+                        selectedProductIDtxtField.setText("");
+                        selectedEmployeeIDTxtField.setText("");
+                        selectedLocationIDTxtField.setText("");
+
+
+                        productIDComboBox.setVisible(true);
+                        employeeIDComboBox.setVisible(true);
+                        locationIDComboBox.setVisible(true);
+
+
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
         setVisible(true);
     }
 
