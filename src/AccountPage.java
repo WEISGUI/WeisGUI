@@ -154,6 +154,7 @@ public class AccountPage extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 WeisScripting weisScripting = new WeisScripting(weisEmployee);
+                HomePage homePage = new HomePage(weisEmployee);
             }
         });
         setVisible(true);

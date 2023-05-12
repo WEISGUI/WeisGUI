@@ -219,19 +219,18 @@ public class ShipmentsPage extends JDialog {
 
                         Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
 
-                        String sql = "INSERT INTO SHIPMENT (Shipment_id, Shipment_price, Order_date, Delivery_date, Quantity, Supplier_id, Product_id, Inventory_id, Employee_id)"
-                                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                        String sql = "INSERT INTO SHIPMENT (Shipment_id, Order_date, Delivery_date, Quantity, Supplier_id, Product_id, Inventory_id, Employee_id)"
+                                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
                         PreparedStatement preparedStatement = connection.prepareStatement(sql);
                         preparedStatement.setString(1, Shipment_id);
-                        preparedStatement.setString(2, Shipment_price);
-                        preparedStatement.setString(3, Order_date);
-                        preparedStatement.setString(4, Delivery_date);
-                        preparedStatement.setString(5, Quantity);
-                        preparedStatement.setString(6, selectedSupplier);
-                        preparedStatement.setString(7, selectedProduct);
-                        preparedStatement.setString(8, selectedInventory);
-                        preparedStatement.setString(9, selectedEmployee);
+                        preparedStatement.setString(2, Order_date);
+                        preparedStatement.setString(3, Delivery_date);
+                        preparedStatement.setString(4, Quantity);
+                        preparedStatement.setString(5, selectedSupplier);
+                        preparedStatement.setString(6, selectedProduct);
+                        preparedStatement.setString(7, selectedInventory);
+                        preparedStatement.setString(8, selectedEmployee);
                         preparedStatement.executeUpdate();
 
                         PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM SHIPMENT");
@@ -239,7 +238,6 @@ public class ShipmentsPage extends JDialog {
                         shipmentsTable.setModel(DbUtils.resultSetToTableModel(resultSet));
 
                         shipmentIDTxtField.setText("");
-                        shipmentPriceTxtField.setText("");
                         orderDateTxtField.setText("");
                         deliveryDateTxtField.setText("");
                         quantityTxtField.setText("");
@@ -259,12 +257,13 @@ public class ShipmentsPage extends JDialog {
                         String sql3 = "UPDATE INVENTORY AS inv " +
                                 "JOIN PRODUCT AS prod ON inv.Product_id = prod.Product_id " +
                                 "JOIN SHIPMENT AS ship ON inv.Product_id = ship.Product_id " +
-                                "SET inv.Quantity = inv.Quantity + ship.Quantity, " +
-                                "inv.Inventory_value = inv.Quantity * prod.Price " +
+                                "SET inv.Quantity = inv.Quantity + ?, " +
+                                "inv.Inventory_value = inv.Quantity  * prod.Price " +
                                 "WHERE inv.Product_id = ?";
 
                         preparedStatement = connection.prepareStatement(sql3);
-                        preparedStatement.setString(1, selectedProduct);
+                        preparedStatement.setInt(1, Integer.parseInt(Quantity));
+                        preparedStatement.setString(2, selectedProduct);
                         preparedStatement.executeUpdate();
 
                     } catch (SQLException ex) {
@@ -354,18 +353,17 @@ public class ShipmentsPage extends JDialog {
 
                         Connection connection = DriverManager.getConnection("jdbc:mysql://triton.towson.edu:3360/bdeguz1db", "bdeguz1", "COSC*bo29m");
 
-                        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE SHIPMENT SET Shipment_price = ?, Order_date = ?, Delivery_date = ?, Quantity = ?, Supplier_id = ?, Product_id = ?, Inventory_id = ?, Employee_id = ? WHERE Shipment_id = ?");
+                        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE SHIPMENT SET Order_date = ?, Delivery_date = ?, Quantity = ?, Supplier_id = ?, Product_id = ?, Inventory_id = ?, Employee_id = ? WHERE Shipment_id = ?");
 
 
-                        preparedStatement.setString(1, Shipment_price);
-                        preparedStatement.setString(2, Order_date);
-                        preparedStatement.setString(3, Delivery_date);
-                        preparedStatement.setString(4, Quantity);
-                        preparedStatement.setString(5, selectedSupplier);
-                        preparedStatement.setString(6, selectedProduct);
-                        preparedStatement.setString(7, selectedInventory);
-                        preparedStatement.setString(8, selectedEmployee);
-                        preparedStatement.setString(9, Shipment_id);
+                        preparedStatement.setString(1, Order_date);
+                        preparedStatement.setString(2, Delivery_date);
+                        preparedStatement.setString(3, Quantity);
+                        preparedStatement.setString(4, selectedSupplier);
+                        preparedStatement.setString(5, selectedProduct);
+                        preparedStatement.setString(6, selectedInventory);
+                        preparedStatement.setString(7, selectedEmployee);
+                        preparedStatement.setString(8, Shipment_id);
                         preparedStatement.executeUpdate();
 
                         PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM SHIPMENT");
@@ -373,7 +371,6 @@ public class ShipmentsPage extends JDialog {
                         shipmentsTable.setModel(DbUtils.resultSetToTableModel(resultSet));
 
 
-                        shipmentPriceTxtField.setText("");
                         orderDateTxtField.setText("");
                         deliveryDateTxtField.setText("");
                         quantityTxtField.setText("");
@@ -387,7 +384,6 @@ public class ShipmentsPage extends JDialog {
                         productIDComboBox.setVisible(true);
                         inventoryIDComboBox.setVisible(true);
                         employeeIDComboBox.setVisible(true);
-
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -460,7 +456,6 @@ public class ShipmentsPage extends JDialog {
                         shipmentsTable.setModel(DbUtils.resultSetToTableModel(resultSet));
 
                         shipmentIDTxtField.setText("");
-                        shipmentPriceTxtField.setText("");
                         orderDateTxtField.setText("");
                         deliveryDateTxtField.setText("");
                         quantityTxtField.setText("");
