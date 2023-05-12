@@ -34,6 +34,11 @@ public class WeisScripting extends JFrame {
     final String highInventory = "select Product_name, Quantity from PRODUCT, INVENTORY where PRODUCT.Product_id = INVENTORY.Product_id AND Quantity > 15";
     final String cheapProduct = "select Product_name, Price from PRODUCT where Price <= 5";
     final String expensiveProduct = "select Product_name, Price from PRODUCT where Price > 5";
+    final String categoryAthroughL = "SELECT Category_name FROM CATEGORY WHERE Category_name BETWEEN \"A\" AND \"L\" ORDER BY Category_name";
+    final String categoryMthroughZ = "SELECT Category_name FROM CATEGORY WHERE Category_name BETWEEN \"M\" AND \"Z\" ORDER BY Category_name";
+
+    final String shipmentsArrivingSoon = "SELECT Shipment_id, Delivery_date, Quantity, Product_id FROM SHIPMENT WHERE Delivery_date BETWEEN curdate() AND curdate() + 7;";
+
     final String k = "";
 
     public WeisScripting(Employee weisEmployee) {
@@ -116,6 +121,7 @@ public class WeisScripting extends JFrame {
         AccountButton.setBackground(Color.WHITE);
 
         inputField.setForeground(Color.red);
+        submitButton.setBackground(Color.WHITE);
         submitButton.setForeground(Color.red);
         submitButton.setFont(new Font("Arial", Font.BOLD, 20));
         inputPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
@@ -134,11 +140,14 @@ public class WeisScripting extends JFrame {
 
         // Create list model to use with the JList instruction panel
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        listModel.addElement("1.) Product Price");
-        listModel.addElement("2.) Low Inventory (15 and below)");
-        listModel.addElement("3.) High inventory (more than 15)");
-        listModel.addElement("4.) Cheap Product (5 and below)");
-        listModel.addElement("5.) Expensive Product (more than 5)");
+        listModel.addElement("- product price");
+        listModel.addElement("- low inventory (15 and below)");
+        listModel.addElement("- high inventory (more than 15)");
+        listModel.addElement("- cheap product (5 and below)");
+        listModel.addElement("- expensive product (more than 5)");
+        listModel.addElement("- categories a through l");
+        listModel.addElement("- categories m through z");
+        listModel.addElement("- shipments arriving soon (next 7 days)");
 
         // Create instruction panel
         JPanel instructPanel = new JPanel();
@@ -151,7 +160,7 @@ public class WeisScripting extends JFrame {
         list.setBackground(Color.red);
         list.setForeground(Color.white);
         label.setPreferredSize(new Dimension(500, 200));
-        list.setFont(new Font("Arial", Font.BOLD, 20));
+        list.setFont(new Font("Arial", Font.BOLD, 15));
         label.setForeground(Color.white);
         label.setFont(new Font("Arial", Font.BOLD, 25));
         label.setBorder(BorderFactory.createLineBorder(Color.black, 1));
@@ -187,7 +196,16 @@ public class WeisScripting extends JFrame {
                 case "expensive product":
                     input = expensiveProduct;
                     break;
-                default:
+                case "categories a through l":
+                    input = categoryAthroughL;
+                    break;
+                case "categories m through z":
+                    input = categoryMthroughZ;
+                    break;
+                case "shipments arriving soon":
+                    input = shipmentsArrivingSoon;
+                    break;
+                    default:
                     input = "select * from EMPLOYEE";
                     break;
 
