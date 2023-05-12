@@ -261,22 +261,6 @@
                       <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                     </constraints>
                   </vspacer>
-                  <component id="eaf43" class="javax.swing.JTextField" binding="orderDateTxtField">
-                    <constraints>
-                      <grid row="6" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                        <preferred-size width="150" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties/>
-                  </component>
-                  <component id="6c5c5" class="javax.swing.JTextField" binding="shipmentPriceTxtField">
-                    <constraints>
-                      <grid row="4" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                        <preferred-size width="150" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties/>
-                  </component>
                   <component id="21487" class="javax.swing.JTextField" binding="shipmentIDTxtField">
                     <constraints>
                       <grid row="2" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
@@ -406,34 +390,6 @@
                       </scrollpane>
                     </children>
                   </grid>
-                  <component id="56f62" class="javax.swing.JTextField" binding="deliveryDateTxtField">
-                    <constraints>
-                      <grid row="8" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                        <preferred-size width="150" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties/>
-                  </component>
-                  <component id="f9f7a" class="javax.swing.JTextField" binding="quantityTxtField">
-                    <constraints>
-                      <grid row="10" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                        <preferred-size width="150" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties/>
-                  </component>
-                  <component id="55ffe" class="javax.swing.JComboBox" binding="productIDComboBox">
-                    <constraints>
-                      <grid row="14" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties/>
-                  </component>
-                  <component id="bf69b" class="javax.swing.JComboBox" binding="inventoryIDComboBox">
-                    <constraints>
-                      <grid row="16" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties/>
-                  </component>
                   <vspacer id="5ec1c">
                     <constraints>
                       <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
@@ -474,12 +430,6 @@
                       <grid row="16" column="7" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                   </hspacer>
-                  <component id="3a0f0" class="javax.swing.JComboBox" binding="supplierIDComboBox">
-                    <constraints>
-                      <grid row="12" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties/>
-                  </component>
                   <component id="d4369" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="2" column="2" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -490,40 +440,14 @@
                       <text value="Shipment ID"/>
                     </properties>
                   </component>
-                  <component id="d215c" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="10" column="2" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <font name="Microsoft Sans Serif" size="18" style="1"/>
-                      <foreground color="-16777216"/>
-                      <text value="Quantity"/>
-                    </properties>
-                  </component>
-                  <component id="87c82" class="javax.swing.JComboBox" binding="employeeIDComboBox">
-                    <constraints>
-                      <grid row="18" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties/>
-                  </component>
                   <vspacer id="e0b36">
                     <constraints>
                       <grid row="19" column="5" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                     </constraints>
                   </vspacer>
-                  <component id="d1d51" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="4" column="2" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <font name="Microsoft Sans Serif" size="18" style="1"/>
-                      <foreground color="-16777216"/>
-                      <text value="Shipment Price"/>
-                    </properties>
-                  </component>
                   <component id="977a" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="6" column="2" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="4" column="2" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <font name="Microsoft Sans Serif" size="18" style="1"/>
@@ -531,9 +455,17 @@
                       <text value="Order Date"/>
                     </properties>
                   </component>
+                  <component id="eaf43" class="javax.swing.JTextField" binding="orderDateTxtField">
+                    <constraints>
+                      <grid row="4" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties/>
+                  </component>
                   <component id="6a827" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="8" column="2" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="6" column="2" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <font name="Microsoft Sans Serif" size="18" style="1"/>
@@ -541,9 +473,35 @@
                       <text value="Delivery Date"/>
                     </properties>
                   </component>
+                  <component id="56f62" class="javax.swing.JTextField" binding="deliveryDateTxtField">
+                    <constraints>
+                      <grid row="6" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties/>
+                  </component>
+                  <component id="d215c" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="8" column="2" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <font name="Microsoft Sans Serif" size="18" style="1"/>
+                      <foreground color="-16777216"/>
+                      <text value="Quantity"/>
+                    </properties>
+                  </component>
+                  <component id="f9f7a" class="javax.swing.JTextField" binding="quantityTxtField">
+                    <constraints>
+                      <grid row="8" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties/>
+                  </component>
                   <component id="574ca" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="12" column="2" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="10" column="2" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <font name="Microsoft Sans Serif" size="18" style="1"/>
@@ -551,9 +509,15 @@
                       <text value="Supplier ID"/>
                     </properties>
                   </component>
+                  <component id="3a0f0" class="javax.swing.JComboBox" binding="supplierIDComboBox">
+                    <constraints>
+                      <grid row="10" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                  </component>
                   <component id="43475" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="14" column="2" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="12" column="2" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <font name="Microsoft Sans Serif" size="18" style="1"/>
@@ -561,9 +525,15 @@
                       <text value="Product ID"/>
                     </properties>
                   </component>
+                  <component id="55ffe" class="javax.swing.JComboBox" binding="productIDComboBox">
+                    <constraints>
+                      <grid row="12" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                  </component>
                   <component id="fb623" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="16" column="2" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="14" column="2" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <font name="Microsoft Sans Serif" size="18" style="1"/>
@@ -571,9 +541,15 @@
                       <text value="Inventory ID"/>
                     </properties>
                   </component>
+                  <component id="bf69b" class="javax.swing.JComboBox" binding="inventoryIDComboBox">
+                    <constraints>
+                      <grid row="14" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                  </component>
                   <component id="a4965" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="18" column="2" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="16" column="2" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <font name="Microsoft Sans Serif" size="18" style="1"/>
@@ -581,9 +557,15 @@
                       <text value="Employee ID"/>
                     </properties>
                   </component>
-                  <component id="a1753" class="javax.swing.JTextField" binding="productSelectText">
+                  <component id="87c82" class="javax.swing.JComboBox" binding="employeeIDComboBox">
                     <constraints>
-                      <grid row="15" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                      <grid row="16" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                  </component>
+                  <component id="3bc6d" class="javax.swing.JTextField" binding="supplierSelectText">
+                    <constraints>
+                      <grid row="11" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
                       </grid>
                     </constraints>
@@ -591,7 +573,7 @@
                       <background color="-1"/>
                     </properties>
                   </component>
-                  <component id="3bc6d" class="javax.swing.JTextField" binding="supplierSelectText">
+                  <component id="a1753" class="javax.swing.JTextField" binding="productSelectText">
                     <constraints>
                       <grid row="13" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -603,7 +585,7 @@
                   </component>
                   <component id="5100f" class="javax.swing.JTextField" binding="inventorySelectText">
                     <constraints>
-                      <grid row="17" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                      <grid row="15" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
                       </grid>
                     </constraints>
@@ -613,7 +595,7 @@
                   </component>
                   <component id="b8c0c" class="javax.swing.JTextField" binding="employeeSelectText">
                     <constraints>
-                      <grid row="19" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                      <grid row="17" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
                       </grid>
                     </constraints>
