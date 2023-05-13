@@ -141,31 +141,39 @@ public class WeisScripting extends JFrame {
 
         // Create list model to use with the JList instruction panel
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        listModel.addElement("- product price");
+        listModel.addElement("- product price\n");
         listModel.addElement("- low inventory (15 and below)");
         listModel.addElement("- high inventory (more than 15)");
         listModel.addElement("- cheap product (5 and below)");
         listModel.addElement("- expensive product (more than 5)");
         listModel.addElement("- categories a through l");
-        listModel.addElement("- categories m through z");
-        listModel.addElement("- shipments arriving soon (next 7 days)");
-        listModel.addElement("- product supplier");
-        listModel.addElement("- handles shipment");
-        listModel.addElement("- handles inventory");
-        listModel.addElement("- shipment date");
+
+
+        DefaultListModel<String> listModel2 = new DefaultListModel<>();
+        listModel2.addElement("   - categories m through z");
+        listModel2.addElement("   - shipments arriving soon (next 7 days)");
+        listModel2.addElement("   - product supplier");
+        listModel2.addElement("   - handles shipment");
+        listModel2.addElement("   - handles inventory");
+        listModel2.addElement("   - shipment date");
 
         // Create instruction panel
         JPanel instructPanel = new JPanel();
-        JLabel label = new JLabel("EXAMPLE QUERIES");
+        JLabel label = new JLabel("EXECUTABLE QUERIES");
         JList<String> list = new JList<>(listModel);
+        JList<String> list2 = new JList<>(listModel2);
         instructPanel.add(label, BorderLayout.LINE_START);
         instructPanel.add(list, BorderLayout.NORTH);
+        instructPanel.add(list2, BorderLayout.EAST);
         add(instructPanel, BorderLayout.SOUTH);
         //instructPanel.setBorder(BorderFactory.createLineBorder(Color.red, 1));
         list.setBackground(Color.red);
         list.setForeground(Color.white);
-        label.setPreferredSize(new Dimension(500, 200));
+        list2.setBackground(Color.red);
+        list2.setForeground(Color.white);
+        list2.setFont(new Font("Arial", Font.BOLD, 15));
         list.setFont(new Font("Arial", Font.BOLD, 15));
+        label.setPreferredSize(new Dimension(500, 200));
         label.setForeground(Color.white);
         label.setFont(new Font("Arial", Font.BOLD, 25));
        // label.setBorder(BorderFactory.createLineBorder(Color.red, 1));
