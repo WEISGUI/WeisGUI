@@ -40,7 +40,8 @@ public class WeisScripting extends JFrame {
     final String productSupplier = "select Product_name, Supplier_name from PRODUCT;";
     final String handlesShipment = "select First_name, Last_name, Shipment_id from EMPLOYEE, SHIPMENT WHERE EMPLOYEE.Employee_id = SHIPMENT.Employee_id";
     final String handlesInventory = "select First_name, Last_name, Inventory_id from EMPLOYEE, INVENTORY WHERE EMPLOYEE.Employee_id = INVENTORY.Employee_id";
-   final  String shipmentDate = "select Shipment_id, Order_date, Delivery_date from SHIPMENT";
+    final  String shipmentDate = "select Shipment_id, Order_date, Delivery_date from SHIPMENT";
+    final String defaultSQL = "select Product_id, Product_name, Price from PRODUCT";
     public WeisScripting(Employee weisEmployee) {
         // Set title, default close operation, and size of frame
         this.weisEmployee = weisEmployee;
@@ -48,7 +49,7 @@ public class WeisScripting extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1535, 850);
         setLocationRelativeTo(null);
-        getRootPane().setBorder(BorderFactory.createLineBorder(Color.red, 10));
+        //getRootPane().setBorder(BorderFactory.createLineBorder(Color.red, 10));
 
         //Create fields and buttons for input panel
         inputField = new JTextField(30);
@@ -124,8 +125,8 @@ public class WeisScripting extends JFrame {
         submitButton.setBackground(Color.WHITE);
         submitButton.setForeground(Color.red);
         submitButton.setFont(new Font("Arial", Font.BOLD, 20));
-        inputPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        inputField.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        //inputPanel.setBorder(BorderFactory.createLineBorder(Color.red, 1));
+        //inputField.setBorder(BorderFactory.createLineBorder(Color.red, 1));
 
         // Create the output table panel
         outputTable = new JTable();
@@ -133,8 +134,8 @@ public class WeisScripting extends JFrame {
         add(scrollPane, BorderLayout.CENTER);
         outputTable.setBackground(Color.red);
         outputTable.setForeground(Color.white);
-        outputTable.setBorder(BorderFactory.createLineBorder(Color.black, 1));
-        scrollPane.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+       // outputTable.setBorder(BorderFactory.createLineBorder(Color.red, 1));
+       // scrollPane.setBorder(BorderFactory.createLineBorder(Color.red, 1));
         scrollPane.setBackground(Color.red);
         scrollPane.setForeground(Color.red);
 
@@ -160,15 +161,15 @@ public class WeisScripting extends JFrame {
         instructPanel.add(label, BorderLayout.LINE_START);
         instructPanel.add(list, BorderLayout.NORTH);
         add(instructPanel, BorderLayout.SOUTH);
-        instructPanel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+        //instructPanel.setBorder(BorderFactory.createLineBorder(Color.red, 1));
         list.setBackground(Color.red);
         list.setForeground(Color.white);
         label.setPreferredSize(new Dimension(500, 200));
         list.setFont(new Font("Arial", Font.BOLD, 15));
         label.setForeground(Color.white);
         label.setFont(new Font("Arial", Font.BOLD, 25));
-        label.setBorder(BorderFactory.createLineBorder(Color.black, 1));
-        list.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+       // label.setBorder(BorderFactory.createLineBorder(Color.red, 1));
+       // list.setBorder(BorderFactory.createLineBorder(Color.red, 1));
         instructPanel.setBackground(Color.red);
 
 
@@ -223,7 +224,7 @@ public class WeisScripting extends JFrame {
                     break;
 
                     default:
-                    input = "select * from PRODUCT";
+                    input = defaultSQL;
                     break;
 
             }
